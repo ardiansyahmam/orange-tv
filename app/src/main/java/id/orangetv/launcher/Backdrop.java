@@ -1,11 +1,15 @@
 package id.orangetv.launcher;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
+import android.graphics.Rect;
 import android.graphics.Shader;
 
 import java.util.LinkedHashMap;
@@ -15,11 +19,17 @@ import java.util.Map;
  * Latar sinematik layar penuh yang mengikuti aplikasi yang sedang terfokus,
  * ala layar utama konsol modern: poster abstrak raksasa di belakang strip ikon.
  *
- * Tidak ada gambar poster sungguhan — setiap latar DIGAMBAR dari kode:
- * gradien dalam dari palet warna khas aplikasi, cahaya radial lembut,
- * beberapa bidang cahaya diagonal yang sangat halus, lalu vignette gelap
- * di tepi. Untuk aplikasi yang tidak dikenal, palet diturunkan dari hash
- * nama paket (selalu nada permata gelap di mode Malam).
+ * Untuk aplikasi populer yang terkurasi, latarnya adalah ARTWORK
+ * sinematik ORIGINAL yang dibundel di res/drawable-nodpi (latar_*.jpg —
+ * karya orisinal yang dibuat khusus untuk Orange TV, bukan poster film
+ * sungguhan). Artwork digambar menutupi layar (center-crop) di atas
+ * gradien palet sebagai lapisan bawah/cadangan.
+ *
+ * Aplikasi lain memakai latar yang DIGAMBAR dari kode: gradien dalam
+ * dari palet warna khas aplikasi, cahaya radial lembut, beberapa bidang
+ * cahaya diagonal yang sangat halus, lalu vignette gelap di tepi. Untuk
+ * aplikasi yang tidak dikenal, palet diturunkan dari hash nama paket
+ * (selalu nada permata gelap di mode Malam).
  *
  * Di mode Siang latar yang sama diberi "cucian terang" (warm off-white)
  * agar antarmuka kaca terang tetap terbaca.
@@ -60,6 +70,103 @@ public final class Backdrop {
         CURATED.put("com.amazon.avod.thirdpartyclient", new Palette(0xFF04141F, 0xFF02090F, 0xFF0E7FA8)); // Prime Video: biru
         CURATED.put("com.spotify.music", new Palette(0xFF04140A, 0xFF020A05, 0xFF1A9E48));             // Spotify: hijau gelap
         CURATED.put("com.spotify.tv.android", CURATED.get("com.spotify.music"));
+    }
+
+    /**
+     * Artwork sinematik original yang dibundel (v2.1), satu per aplikasi
+     * populer. Semua karya orisinal — tanpa teks, tanpa logo, tanpa tokoh
+     * atau adegan berhak cipta. Paket yang tidak ada di peta ini memakai
+     * gradien tergambar seperti sebelumnya.
+     */
+    private static final Map<String, Integer> ARTWORK = new LinkedHashMap<>();
+
+    static {
+        ARTWORK.put("com.netflix.mediaclient", R.drawable.latar_netflix);
+        ARTWORK.put("com.google.android.youtube.tv", R.drawable.latar_youtube);
+        ARTWORK.put("com.google.android.youtube", R.drawable.latar_youtube);
+        ARTWORK.put("com.tencent.qqlive", R.drawable.latar_wetv);
+        ARTWORK.put("com.vidio.android", R.drawable.latar_vidio);
+        ARTWORK.put("com.disney.disneyplus", R.drawable.latar_disney);
+        ARTWORK.put("in.startv.hotstar", R.drawable.latar_disney);
+        ARTWORK.put("com.amazon.avod.thirdpartyclient", R.drawable.latar_prime);
+        ARTWORK.put("com.spotify.music", R.drawable.latar_spotify);
+        ARTWORK.put("com.spotify.tv.android", R.drawable.latar_spotify);
+    }
+
+    /** Resources aplikasi untuk membaca artwork; diisi sekali dari Activity. */
+    private static Resources resources;
+
+    /** Wajib dipanggil sekali (dari MainActivity.onCreate) sebelum render. */
+    public static void init(Context context) {
+        if (resources == null && context != null) {
+            resources = context.getApplicationContext().getResources();
+        }
+    }
+
+    /** Cache kecil bitmap artwork hasil dekode (maks 4, LRU). */
+    private static final LinkedHashMap<Integer, Bitmap> ART_CACHE =
+            new LinkedHashMap<Integer, Bitmap>(8, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<Integer, Bitmap> eldest) {
+                    if (size() > 4) {
+                        eldest.getValue().recycle();
+                        return true;
+                    }
+                    return false;
+                }
+            };
+
+    /**
+     * Dekode artwork untuk paket ini (di-downsample agar lebarnya tidak
+     * melebihi target), atau null bila paket tidak punya artwork / belum
+     * init / dekode gagal — pemanggil lalu memakai gradien.
+     */
+    private static Bitmap artworkFor(String packageName, int targetWidth) {
+        if (resources == null || packageName == null) {
+            return null;
+        }
+        Integer resId = ARTWORK.get(packageName);
+        if (resId == null) {
+            return null;
+        }
+        synchronized (ART_CACHE) {
+            Bitmap cached = ART_CACHE.get(resId);
+            if (cached != null && !cached.isRecycled()) {
+                return cached;
+            }
+        }
+        try {
+            BitmapFactory.Options bounds = new BitmapFactory.Options();
+            bounds.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(resources, resId, bounds);
+            int sample = 1;
+            while (bounds.outWidth / (sample * 2) >= targetWidth && sample < 16) {
+                sample *= 2;
+            }
+            BitmapFactory.Options opts = new BitmapFactory.Options();
+            opts.inSampleSize = sample;
+            Bitmap bmp = BitmapFactory.decodeResource(resources, resId, opts);
+            if (bmp != null) {
+                synchronized (ART_CACHE) {
+                    ART_CACHE.put(resId, bmp);
+                }
+            }
+            return bmp;
+        } catch (Exception | OutOfMemoryError e) {
+            return null;
+        }
+    }
+
+    /** Gambar src memenuhi dst dengan pemotongan tengah (center-crop). */
+    private static void drawCenterCrop(Canvas cv, Bitmap src, int dstW, int dstH, Paint paint) {
+        float scale = Math.max((float) dstW / src.getWidth(), (float) dstH / src.getHeight());
+        int cropW = Math.round(dstW / scale);
+        int cropH = Math.round(dstH / scale);
+        int left = Math.max(0, (src.getWidth() - cropW) / 2);
+        int top = Math.max(0, (src.getHeight() - cropH) / 2);
+        Rect s = new Rect(left, top, left + cropW, top + cropH);
+        Rect d = new Rect(0, 0, dstW, dstH);
+        cv.drawBitmap(src, s, d, paint);
     }
 
     /** Nada permata gelap untuk palet turunan hash. */
@@ -129,6 +236,14 @@ public final class Backdrop {
         Canvas cv = new Canvas(bmp);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+        Bitmap art = artworkFor(packageName, width);
+        if (art != null) {
+            // Artwork sinematik original (v2.1) menutupi seluruh layar;
+            // gradien palet di cabang else adalah lapisan bawah/cadangan.
+            paint.setFilterBitmap(true);
+            drawCenterCrop(cv, art, width, height, paint);
+            paint.setFilterBitmap(false);
+        } else {
         // 1) Gradien dasar diagonal: tengah sedikit lebih terang di kiri-atas.
         paint.setShader(new LinearGradient(0, 0, width, height,
                 new int[]{lighten(p.mid, 26), p.base, darken(p.mid, 10)},
@@ -162,6 +277,7 @@ public final class Backdrop {
         paint.setColor(withAlpha(p.glow, night ? 22 : 14));
         cv.drawRect(width * 0.18f, -height * 0.3f, width * 0.235f, height * 1.3f, paint);
         cv.restore();
+        } // akhir cabang gradien (bila tidak ada artwork)
 
         // 5) Vignette: tepi digelapkan agar fokus tetap ke tengah layar.
         paint.setShader(new RadialGradient(width / 2f, height / 2f, width * 0.72f,

@@ -6,6 +6,11 @@ Perubahan dari simulasi v1: tata letak ala PS5 —
     Netflix: gradien merah tua + cahaya radial + bidang diagonal +
     vignette; TANPA orang dan TANPA poster berhak cipta, murni bentuk
     dan cahaya yang digambar dari kode),
+
+Varian v2.1 (simulasi-tv-night-v21.png): latar Mode Malam memakai
+ARTWORK sinematik original yang sungguhan dibundel di aplikasi
+(artwork/netflix.jpg), dikomposit ke area layar dan digelapkan sedikit
+di bawah strip/klaster/kartu yang sama persis.
   - strip ikon horizontal di dekat atas; ikon terfokus (Netflix) lebih
     besar dengan cincin oranye tipis + cahaya,
   - klaster kanan atas: tombol bundar Input / Wi-Fi / Pengaturan + jam
@@ -18,8 +23,9 @@ Menghasilkan simulasi-tv-night-v2.png & simulasi-tv-day-v2.png
 (berkas v1 tidak ditimpa).
 """
 import math
+import os
 
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageFilter
 
 W, H = 1920, 1080
 NOTO = "/usr/share/fonts/truetype/noto/"
@@ -93,6 +99,25 @@ def draw_backdrop(night):
     return img
 
 
+def draw_backdrop_artwork():
+    """Latar v2.1 Mode Malam: artwork original Netflix yang dibundel
+    (artwork/netflix.jpg), di-center-crop ke 1600x900, digelapkan
+    sedikit, lalu diberi vignette seperti di aplikasi."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "artwork", "netflix.jpg")
+    src = Image.open(path).convert("RGB")
+    scale = max(SW / src.width, SH / src.height)
+    nw, nh = round(src.width * scale), round(src.height * scale)
+    src = src.resize((nw, nh), Image.LANCZOS)
+    left, top = (nw - SW) // 2, (nh - SH) // 2
+    img = src.crop((left, top, left + SW, top + SH))
+    img = ImageEnhance.Brightness(img).enhance(0.82).convert("RGBA")
+    black = Image.new("RGBA", (SW, SH), (0, 0, 0, 255))
+    black.putalpha(radial_alpha(SW, SH, max_alpha=150))
+    img.alpha_composite(black)
+    return img
+
+
 def glyph_tile(d, cx, cy, s, color, glyph=None, glyph_color=(255, 255, 255, 255),
                triangle=False, gear=False):
     box = [cx - s // 2, cy - s // 2, cx + s // 2, cy + s // 2]
@@ -117,7 +142,8 @@ def glyph_tile(d, cx, cy, s, color, glyph=None, glyph_color=(255, 255, 255, 255)
 def draw_ui(mode):
     """Gambar antarmuka Orange TV v2 pada kanvas 1600x900."""
     night = mode == "night"
-    img = draw_backdrop(night)
+    # v2.1: Mode Malam memakai artwork terbundel; Mode Siang tetap gradien.
+    img = draw_backdrop_artwork() if night else draw_backdrop(night)
     ov = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
     d = ImageDraw.Draw(ov)
 
@@ -269,7 +295,8 @@ def scene(mode):
     return canvas.convert("RGB")
 
 
-for m in ("night", "day"):
-    out = f"/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-{m}-v2.png"
-    scene(m).save(out)
+if __name__ == "__main__":
+    # Render utama skrip ini sekarang: simulasi v2.1 Mode Malam.
+    out = "/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-night-v21.png"
+    scene("night").save(out)
     print("saved", out)

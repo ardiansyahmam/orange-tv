@@ -18,12 +18,18 @@ aksen — selebihnya kaca netral yang bersih.
   cincin oranye tipis dan cahayanya sendiri. Satu baris berarti navigasi
   remote cukup kiri/kanan — paling mudah ditebak. Titik-titik kecil di kiri
   bawah menandai seksi yang sedang aktif.
-- **Latar sinematik dinamis** — setiap aplikasi punya latar layar penuh yang
-  digambar langsung dari kode (gradien dalam + cahaya radial + vignette dari
-  palet warna khas aplikasi: Netflix merah tua, WeTV biru dalam, Spotify
-  hijau gelap, dan seterusnya; aplikasi lain mendapat palet turunan dari
-  nama paketnya). Latar berganti dengan crossfade halus mengikuti fokus.
-  Tidak ada gambar poster yang dipakai.
+- **Latar sinematik dinamis** — setiap aplikasi punya latar layar penuh.
+  Sejak **v2.1**, aplikasi populer yang terkurasi memakai **artwork
+  sinematik original yang dibundel** di dalam APK (lihat daftar di bawah) —
+  karya orisinal yang dibuat khusus untuk Orange TV: tanpa teks, tanpa
+  logo, tanpa tokoh atau adegan dari film mana pun. Aplikasi lain memakai
+  latar yang digambar langsung dari kode (gradien dalam + cahaya radial +
+  vignette dari palet warna khas aplikasi: Netflix merah tua, WeTV biru
+  dalam, Spotify hijau gelap, dan seterusnya; aplikasi tak dikenal
+  mendapat palet turunan dari nama paketnya) — gradien yang sama juga
+  menjadi lapisan bawah/cadangan di balik artwork. Latar berganti dengan
+  crossfade halus mengikuti fokus, dan di Mode Siang artwork maupun
+  gradien sama-sama diberi cucian terang agar tetap terbaca.
 - **Klaster kanan atas** — tombol bundar **Input** (pemilih input TV),
   **Wi-Fi**, dan **Pengaturan**, chip mode Siang/Malam, serta jam dan
   tanggal Bahasa Indonesia.
@@ -48,6 +54,26 @@ aksen — selebihnya kaca netral yang bersih.
   jadi upgrade berjalan di tempat.
 - **Ringan** — satu APK kecil (tanpa AndroidX, tanpa pustaka eksternal),
   minSdk 26 (Android 8) sehingga cocok untuk TV lama ber-RAM kecil.
+
+## Artwork latar (v2.1)
+
+Tujuh artwork original dibundel di `app/src/main/res/drawable-nodpi/`
+(sumber mentahnya di folder `artwork/`), masing-masing 1280px, JPEG ±80,
+di bawah 250 KB:
+
+| Berkas | Aplikasi | Suasana |
+| --- | --- | --- |
+| `latar_netflix.jpg` | Netflix | Anak-anak bersepeda dengan senter di hutan gelap, langit merah badai berpetir — nuansa petualangan retro |
+| `latar_youtube.jpg` | YouTube / YouTube TV | Lounge kreator modern di malam hari, panel cahaya merah lembut yang menyala |
+| `latar_wetv.jpg` | WeTV | Siluet pasangan di gang kota tua berlampion dan sakura, palet biru-hijau malam |
+| `latar_vidio.jpg` | Vidio | Cakrawala Jakarta saat senja, langit magenta-jingga, lampu kota mulai menyala |
+| `latar_disney.jpg` | Disney+ / Disney+ Hotstar | Kastil dongeng generik di bukit, langit biru berbintang, aurora, dan kunang-kunang |
+| `latar_prime.jpg` | Prime Video | Jalan kota hujan bergaya film noir, neon biru, sosok berpayung |
+| `latar_spotify.jpg` | Spotify | Konser gelap, siluet penonton, berkas cahaya panggung hijau, gitaris di panggung |
+
+Semua artwork adalah karya original yang dihasilkan untuk proyek ini —
+bukan poster, tangkapan layar, atau materi berhak cipta dari layanan mana
+pun. Aplikasi di luar daftar ini tetap mendapat latar gradien tergambar.
 
 ## Pasang lewat ADB
 
@@ -102,7 +128,7 @@ Struktur kode (semua di `app/src/main/java/id/orangetv/launcher/`):
 | Berkas | Isi |
 | --- | --- |
 | `MainActivity.java` | Layar utama v2: strip ikon, klaster kanan atas, kartu info, kelola Favorit |
-| `Backdrop.java` | Latar sinematik per aplikasi yang digambar dari kode + palet warna |
+| `Backdrop.java` | Latar sinematik per aplikasi: artwork original terbundel (v2.1) + gradien tergambar & palet warna |
 | `UiTheme.java` | Seluruh warna mode Siang/Malam + aksen oranye |
 | `AppCatalog.java` | Daftar aplikasi terpasang + semaian Favorit pertama |
 | `AppEntry.java` | Model satu aplikasi |

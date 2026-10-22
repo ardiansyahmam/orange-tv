@@ -37,7 +37,8 @@ import java.util.Locale;
  * Layar utama Orange TV v2 — gaya konsol modern (ala PS5):
  *
  *   - Latar sinematik layar penuh yang mengikuti aplikasi terfokus
- *     (digambar dari kode oleh {@link Backdrop}, tanpa poster sungguhan).
+ *     (oleh {@link Backdrop}: artwork sinematik ORIGINAL yang dibundel
+ *     untuk aplikasi populer, gradien tergambar dari kode untuk sisanya).
  *   - Satu strip ikon horizontal di dekat atas: Favorit, lalu Semua
  *     Aplikasi, lalu ubin alat. Satu baris = navigasi D-pad yang paling
  *     mudah ditebak (kiri/kanan saja; atas menuju klaster kanan atas).
@@ -130,6 +131,7 @@ public class MainActivity extends Activity {
         nightMode = prefs.getBoolean(KEY_NIGHT_MODE, true); // bawaan: Malam
         soundOn = prefs.getBoolean(KEY_SOUND_ON, true);     // bawaan: Nyala
         theme = UiTheme.of(nightMode);
+        Backdrop.init(this); // agar Backdrop bisa membaca artwork yang dibundel
         sounds = new SoundPlayer(this);
         sounds.setEnabled(soundOn);
 
