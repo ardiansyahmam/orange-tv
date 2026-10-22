@@ -1,0 +1,30 @@
+# ============================================================
+#  HATI-HATI — hanya nonaktifkan bila Anda YAKIN tidak memakainya
+#  Paket di berkas ini memicu KONFIRMASI EKSTRA di tv.py:
+#  tanpa --confirm-hati-hati (atau jawaban eksplisit di prompt),
+#  tv.py menolak menerapkannya. Sebagian besar adalah soal selera:
+#  menonaktifkannya mematikan fitur yang mungkin masih Anda pakai.
+#  Sumber: docs/PACKAGES.md amirulmzlan/android-tv-debloat
+#  (kategori "Ask" / peringatan khusus) + contoh teruji MiTV-MSSP2.
+# ============================================================
+
+# --- Google: fitur yang mungkin masih dipakai ---
+com.google.android.apps.mediashell            # Chromecast built-in — mati = tidak bisa cast dari HP
+com.google.android.katniss                    # Google Assistant / pencarian suara — mic remote berhenti
+com.google.android.speech.pumpkin             # bagian dari tumpukan suara Assistant
+com.google.android.play.games                 # Play Games — hanya bila tidak pernah main game
+com.google.android.videos                     # Google TV / Play Movies — hanya bila tidak pernah sewa/beli film
+com.google.android.youtube.tvmusic            # YouTube Music — hanya bila tidak dipakai
+
+# --- Screensaver: BERBAHAYA bila ini screensaver yang sedang aktif ---
+# tv.py memeriksa screensaver aktif dari perangkat dan MENOLAK paket ini
+# selama ia tercatat sebagai screensaver aktif. Tanpa screensaver aktif,
+# TV akan langsung tidur setelah beberapa menit diam (kejadian nyata yang
+# terdokumentasi di repo sumber). Tetapkan screensaver lain dulu bila ragu.
+com.google.android.backdrop                   # Ambient Mode (screensaver Google)
+com.mitv.dream                                # screensaver Xiaomi/Mi TV
+
+# --- Layanan pembaruan vendor ---
+# Mematikan ini menghentikan pembaruan firmware otomatis. Di TV teruji
+# (MiTV-MSSP2) ini pilihan pribadi pemiliknya — bukan anjuran umum.
+com.xiaomi.mitv.updateservice                 # layanan update Xiaomi/Mi TV

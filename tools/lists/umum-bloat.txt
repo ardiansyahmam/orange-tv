@@ -1,0 +1,33 @@
+# ============================================================
+#  UMUM — bloat lintas merek (Android TV / Google TV)
+#  Paket-paket Google yang umum ada di hampir semua merek TV dan
+#  aman dinonaktifkan menurut referensi amirulmzlan/android-tv-debloat
+#  (docs/PACKAGES.md, terverifikasi di TV asli — lihat tools/README.md).
+#  Satu paket per baris. Baris diawali # adalah komentar.
+#  Alat ini TIDAK PERNAH meng-uninstall; hanya pm disable-user.
+# ============================================================
+
+# Baris rekomendasi/konten promosi di layar utama
+com.google.android.tvrecommendations          # baris rekomendasi Android TV
+com.google.android.leanbacklauncher.recommendations  # rekomendasi launcher Leanback lama
+
+# Pengirim laporan & masukan (telemetri ringan Google)
+com.google.android.feedback                   # pengirim masukan/feedback
+com.google.android.tv.bugreportsender         # pengirim laporan bug TV
+
+# Sinkronisasi & layanan latar yang tidak terpakai di TV
+com.google.android.syncadapters.calendar      # sinkronisasi kalender (tidak terpakai di TV)
+com.google.android.syncadapters.contacts      # sinkronisasi kontak (tidak terpakai di TV)
+com.android.printspooler                      # antrean cetak/print spooler (TV tidak mencetak)
+
+# Shell uji Chromium — BUKAN WebView yang dipakai aplikasi.
+# (com.google.android.webview / com.android.webview TIDAK boleh disentuh;
+#  keduanya masuk daftar larangan keras di tv.py.)
+org.chromium.webview_shell                    # shell pengujian Chromium bawaan firmware
+
+# CATATAN pola (bukan paket — jangan dijadikan baris paket):
+# Play Auto Install mendorong aplikasi ke TV lewat paket bernama
+#   android.autoinstalls.config.<merek>   (berbeda tiap merek)
+# Contoh terverifikasi untuk Xiaomi ada di lists/xiaomi.txt.
+# Untuk merek lain, cari nama persisnya dari hasil --probe TV Anda,
+# lalu tambahkan ke berkas daftar vendor Anda sendiri bila yakin.

@@ -1,0 +1,33 @@
+# ============================================================
+#  XIAOMI / Mi TV (PatchWall) — firmware global
+#  TERVERIFIKASI di TV asli: Xiaomi Mi TV MiTV-MSSP2, Android TV 9,
+#  firmware global (contoh terdokumentasi di amirulmzlan/android-tv-debloat,
+#  examples/xiaomi-mitv-mssp2.md). Untuk model/firmware Xiaomi lain,
+#  cocokkan dulu dengan hasil --probe TV Anda — jangan asal terapkan.
+#  Paket screensaver (com.mitv.dream) dan update (com.xiaomi.mitv.updateservice)
+#  sengaja TIDAK di sini; keduanya ada di lists/hati-hati.txt.
+# ============================================================
+
+# Telemetri & statistik Xiaomi
+com.miui.tv.analytics                         # analitik MIUI TV
+com.xiaomi.statistic                          # statistik pemakaian Xiaomi
+
+# Iklan & baris konten PatchWall
+com.mitv.tvhome.atv                           # PatchWall (layar utama konten Xiaomi)
+com.mitv.tvhome.michannel                     # baris Mi Channel
+com.xm.webcontent                             # konten web/promosi Xiaomi
+
+# Pendorong aplikasi
+android.autoinstalls.config.xiaomi.amelie     # Play Auto Install konfigurasi Xiaomi
+
+# Aplikasi bawaan yang jarang terpakai
+com.mitv.gallery                              # galeri foto bawaan (termasuk wallpaper galeri)
+com.xiaomi.mimusic2                           # Mi Music
+com.xiaomi.mitv.mediaexplorer               # penjelajah media/berkas bawaan
+
+# PERINGATAN — paket Xiaomi berikut terlihat seperti bloat tetapi MENOPANG TV,
+# jangan pernah dinonaktifkan (juga dilindungi daftar larangan di tv.py):
+#   com.xiaomi.android.tvsetup.partnercustomizer  -> layar pairing remote Bluetooth
+#   com.xiaomi.mitv.tvmanager                     -> layanan sistem TV
+#   mitv.service                                  -> layanan inti Mi TV
+#   com.mstar.netflixobserver                     -> tombol Netflix di remote
