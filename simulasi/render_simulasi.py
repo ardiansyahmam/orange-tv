@@ -22,10 +22,20 @@ Mode Siang: latar yang sama diberi cucian terang, kaca jadi terang.
 Menghasilkan simulasi-tv-night-v2.png & simulasi-tv-day-v2.png
 (berkas v1 tidak ditimpa).
 """
+import json
 import math
 import os
+from datetime import datetime, timedelta, timezone
 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageFilter
+
+try:
+    from zoneinfo import ZoneInfo
+    WIB = ZoneInfo("Asia/Jakarta")
+except Exception:  # noqa: BLE001 - cadangan bila tzdata tidak ada
+    WIB = timezone(timedelta(hours=7))
+
+HARI_ID = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
 
 W, H = 1920, 1080
 NOTO = "/usr/share/fonts/truetype/noto/"
@@ -139,7 +149,70 @@ def glyph_tile(d, cx, cy, s, color, glyph=None, glyph_color=(255, 255, 255, 255)
         d.text((cx - gw / 2, cy - s * 0.30), glyph, font=f, fill=glyph_color)
 
 
-def draw_ui(mode):
+def pilih_kartu_jadwal(sekarang_wib):
+    """Replikasi logika kartu di aplikasi: entri pertama jadwal.json yang
+    kick-off-nya dalam jendela [kick-off - 2 hari, kick-off + 3 jam]."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "..", "jadwal", "jadwal.json")
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    for entri in data.get("jadwal", []):
+        ko = datetime.fromisoformat(entri["kickoff_utc"].replace("Z", "+00:00"))
+        if ko - timedelta(days=2) <= sekarang_wib <= ko + timedelta(hours=3):
+            return entri, ko
+    return None, None
+
+
+def teks_kartu_jadwal(sekarang_wib):
+    """Susun 4 baris kartu dari data asli + hitung mundur ala aplikasi."""
+    entri, ko = pilih_kartu_jadwal(sekarang_wib)
+    if entri is None:
+        return None
+    ko_wib = ko.astimezone(WIB)
+    selisih = (ko_wib.date() - sekarang_wib.date()).days
+    if selisih > 1:
+        mundur = f"dalam {selisih} hari"
+    elif selisih == 1:
+        mundur = "BESOK"
+    elif selisih == 0:
+        mundur = "MALAM INI" if ko_wib.hour >= 18 else "HARI INI"
+    else:
+        mundur = "SEDANG BERLANGSUNG"
+    kapan = f"{HARI_ID[ko_wib.weekday()]} · {ko_wib:%H:%M} WIB"
+    return (
+        f"{entri['tim'].upper()} · PERTANDINGAN BERIKUTNYA",
+        f"vs {entri['lawan']}",
+        f"{entri['kompetisi']} · {'Kandang' if entri['kandang'] else 'Tandang'}",
+        kapan,
+        mundur,
+    )
+
+
+def draw_match_card(d, night, text, sub, tile_rim, card_fill):
+    """Kartu jadwal v2.2: di bawah strip, sisi kanan, di atas kartu info."""
+    baris = teks_kartu_jadwal(datetime(2026, 10, 23, 19, 30, tzinfo=WIB))
+    if baris is None:
+        return
+    mc_w, mc_h = 500, 196
+    mx1, my1 = SW - 64 - mc_w, 268
+    rr(d, [mx1, my1, mx1 + mc_w, my1 + mc_h], 20, fill=card_fill,
+       outline=tile_rim, width=1)
+    px = mx1 + 26
+    # Baris 1: titik merah + tim
+    d.ellipse([px, my1 + 27, px + 11, my1 + 38], fill=(229, 50, 45, 255))
+    d.text((px + 20, my1 + 20), baris[0], font=F(BOLD, 17), fill=text)
+    # Baris 2: vs lawan (besar)
+    d.text((px, my1 + 52), baris[1], font=F(BOLD, 40), fill=text)
+    # Baris 3: kompetisi
+    d.text((px, my1 + 108), baris[2], font=F(REG, 19), fill=sub)
+    # Baris 4: hari · jam (utama) + hitung mundur (sekunder)
+    f_when = F(BOLD, 20)
+    d.text((px, my1 + 140), baris[3], font=f_when, fill=text)
+    w1 = d.textlength(baris[3], font=f_when)
+    d.text((px + w1 + 14, my1 + 140), "·  " + baris[4], font=f_when, fill=sub)
+
+
+def draw_ui(mode, match=False):
     """Gambar antarmuka Orange TV v2 pada kanvas 1600x900."""
     night = mode == "night"
     # v2.1: Mode Malam memakai artwork terbundel; Mode Siang tetap gradien.
@@ -246,6 +319,10 @@ def draw_ui(mode):
             d.ellipse([dx, dot_y, dx + 9, dot_y + 9], fill=dot_off)
             dx += 9 + 10
 
+    # ---------- kartu jadwal (v2.2): di bawah strip, sisi kanan ----------
+    if match:
+        draw_match_card(d, night, text, sub, tile_rim, card_fill)
+
     # ---------- kanan bawah: kartu info kaca ----------
     card_w, card_h = 452, 106
     cx0, cy0 = SW - pad - card_w, SH - 56 - card_h
@@ -263,7 +340,7 @@ def draw_ui(mode):
     return img
 
 
-def scene(mode):
+def scene(mode, match=False):
     night = mode == "night"
     if night:
         canvas = vgrad((W, H), (24, 25, 31), (13, 13, 16)).convert("RGBA")
@@ -281,7 +358,7 @@ def scene(mode):
     d.ellipse([760, 1036, 1160, 1058], fill=(0, 0, 0, 90))
     d.rounded_rectangle([136, 54, 1784, 990], radius=26, fill=(8, 8, 10, 255))
     d.rounded_rectangle([136, 54, 1784, 990], radius=26, outline=(52, 52, 58, 255), width=2)
-    ui = draw_ui(mode)
+    ui = draw_ui(mode, match=match)
     canvas.alpha_composite(ui, (160, 78))
     refl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     rd = ImageDraw.Draw(refl)
@@ -300,3 +377,7 @@ if __name__ == "__main__":
     out = "/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-night-v21.png"
     scene("night").save(out)
     print("saved", out)
+    # v2.2: Mode Malam + kartu jadwal (data asli jadwal.json).
+    out22 = "/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-night-v22.png"
+    scene("night", match=True).save(out22)
+    print("saved", out22)

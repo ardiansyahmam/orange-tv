@@ -112,6 +112,13 @@ public class MainActivity extends Activity {
     private TextView screenTimeValue;
     private TextView storageValue;
 
+    // Kartu jadwal pertandingan (v2.2)
+    private LinearLayout matchCard;
+    private TextView matchTeamLine;
+    private TextView matchVs;
+    private TextView matchComp;
+    private TextView matchWhen;
+
     private long lastMoveSoundAt = 0;
     private boolean suppressFirstMoveSound = true;
 
@@ -166,6 +173,7 @@ public class MainActivity extends Activity {
         clockHandler.removeCallbacks(clockTick);
         clockHandler.post(clockTick);
         updateStats();
+        refreshMatchCard();
     }
 
     @Override
@@ -290,6 +298,9 @@ public class MainActivity extends Activity {
 
         // Kanan bawah: kartu info kaca.
         root.addView(buildStatsCard());
+
+        // Di bawah strip, sisi kanan, di atas kartu info: kartu jadwal (v2.2).
+        root.addView(buildMatchCard());
 
         // Fokus D-pad yang tegas: dari strip, Atas -> klaster; dari klaster,
         // Bawah -> ubin pertama strip. (Diisi setelah strip terisi.)
@@ -505,6 +516,114 @@ public class MainActivity extends Activity {
         p.bottomMargin = TileFactory.dp(this, 42);
         card.setLayoutParams(p);
         return card;
+    }
+
+    /**
+     * Kartu jadwal pertandingan (v2.2): kaca, hanya-tampil (tidak bisa
+     * difokus), di bawah strip sisi kanan. Isinya mengikuti referensi:
+     * titik merah + "TIM · PERTANDINGAN BERIKUTNYA", "vs Lawan" besar,
+     * kompetisi · Kandang/Tandang, lalu hari · jam · hitung mundur.
+     * GONE sampai ada pertandingan dalam jendela H-2.
+     */
+    private View buildMatchCard() {
+        matchCard = new LinearLayout(this);
+        matchCard.setOrientation(LinearLayout.VERTICAL);
+        matchCard.setPadding(TileFactory.dp(this, 22), TileFactory.dp(this, 16),
+                TileFactory.dp(this, 22), TileFactory.dp(this, 16));
+        matchCard.setBackground(TileFactory.glass(theme, this, false, 18));
+        matchCard.setElevation(TileFactory.dp(this, 4));
+        matchCard.setFocusable(false);
+        matchCard.setClickable(false);
+        matchCard.setVisibility(View.GONE);
+
+        // Baris 1: titik merah + nama tim.
+        LinearLayout line1 = new LinearLayout(this);
+        line1.setOrientation(LinearLayout.HORIZONTAL);
+        line1.setGravity(Gravity.CENTER_VERTICAL);
+        View dot = new View(this);
+        GradientDrawable dotBg = new GradientDrawable();
+        dotBg.setShape(GradientDrawable.OVAL);
+        dotBg.setColor(0xFFE5322D);
+        dot.setBackground(dotBg);
+        int dotSize = TileFactory.dp(this, 10);
+        LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(dotSize, dotSize);
+        dotParams.rightMargin = TileFactory.dp(this, 9);
+        dot.setLayoutParams(dotParams);
+        line1.addView(dot);
+        matchTeamLine = new TextView(this);
+        matchTeamLine.setTextColor(theme.textPrimary);
+        matchTeamLine.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.5f);
+        matchTeamLine.setTypeface(Typeface.DEFAULT_BOLD);
+        line1.addView(matchTeamLine);
+        matchCard.addView(line1);
+
+        // Baris 2: "vs Lawan" besar.
+        matchVs = new TextView(this);
+        matchVs.setTextColor(theme.textPrimary);
+        matchVs.setTextSize(TypedValue.COMPLEX_UNIT_SP, 31);
+        matchVs.setTypeface(Typeface.DEFAULT_BOLD);
+        matchVs.setMaxLines(1);
+        matchVs.setEllipsize(android.text.TextUtils.TruncateAt.END);
+        LinearLayout.LayoutParams vsParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        vsParams.topMargin = TileFactory.dp(this, 6);
+        matchVs.setLayoutParams(vsParams);
+        matchCard.addView(matchVs);
+
+        // Baris 3: kompetisi · Kandang/Tandang.
+        matchComp = new TextView(this);
+        matchComp.setTextColor(theme.textSecondary);
+        matchComp.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14.5f);
+        LinearLayout.LayoutParams compParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        compParams.topMargin = TileFactory.dp(this, 3);
+        matchComp.setLayoutParams(compParams);
+        matchCard.addView(matchComp);
+
+        // Baris 4: hari · jam · hitung mundur (mundur berwarna sekunder).
+        matchWhen = new TextView(this);
+        matchWhen.setTextColor(theme.textPrimary);
+        matchWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15.5f);
+        matchWhen.setTypeface(Typeface.DEFAULT_BOLD);
+        LinearLayout.LayoutParams whenParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        whenParams.topMargin = TileFactory.dp(this, 5);
+        matchWhen.setLayoutParams(whenParams);
+        matchCard.addView(matchWhen);
+
+        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        p.gravity = Gravity.TOP | Gravity.RIGHT;
+        p.rightMargin = TileFactory.dp(this, 48);
+        p.topMargin = TileFactory.dp(this, 252);
+        matchCard.setLayoutParams(p);
+        matchCard.setMinimumWidth(TileFactory.dp(this, 350));
+        return matchCard;
+    }
+
+    /** Minta data jadwal terbaru (server, atau cache) lalu perbarui kartu. */
+    private void refreshMatchCard() {
+        Jadwal.muat(this, new Jadwal.Callback() {
+            @Override
+            public void onMatch(Jadwal.Match m) {
+                if (m == null) {
+                    matchCard.setVisibility(View.GONE);
+                    return;
+                }
+                matchTeamLine.setText((m.tim + " · PERTANDINGAN BERIKUTNYA").toUpperCase(ID_LOCALE));
+                matchVs.setText("vs " + m.lawan);
+                matchComp.setText(m.kompetisi + " · " + (m.kandang ? "Kandang" : "Tandang"));
+                String kapan = Jadwal.formatHariJam(m.kickoffMs);
+                String mundur = Jadwal.hitungMundur(m.kickoffMs, System.currentTimeMillis());
+                android.text.SpannableString teks =
+                        new android.text.SpannableString(kapan + "  ·  " + mundur);
+                teks.setSpan(new android.text.style.ForegroundColorSpan(theme.textSecondary),
+                        kapan.length(), teks.length(),
+                        android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                matchWhen.setText(teks);
+                matchCard.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     // ------------------------------------------------------------------

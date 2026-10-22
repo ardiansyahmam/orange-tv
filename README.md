@@ -37,6 +37,16 @@ aksen — selebihnya kaca netral yang bersih.
   pemakaian 7 hari dari UsageStats; butuh izin "akses penggunaan" — tanpa
   izin, kartu menampilkan "—" dan launcher tetap normal) dan
   **Penyimpanan Terpakai** (angka nyata dari StatFs).
+- **Kartu jadwal pertandingan** (sejak **v2.2**) — kartu kaca di bawah
+  strip, sisi kanan: titik merah + nama tim, "vs Lawan" besar, kompetisi
+  dan status Kandang/Tandang, lalu hari · jam WIB · hitung mundur
+  ("dalam 2 hari", "BESOK", "MALAM INI"). Cakupannya **Timnas Indonesia +
+  liga top Eropa** (Premier League, La Liga, Serie A, Bundesliga, Liga
+  Champions). Kartu hanya muncul bila pertandingan terdekat masuk
+  jendela **H-2 sampai 3 jam sesudah kick-off**; di luar itu layar bersih
+  seperti biasa. Datanya dari berkas `jadwal/jadwal.json` di repo ini
+  (lihat bagian Jadwal di bawah) — launcher mengambilnya saat dibuka dan
+  menyimpan cache terakhir untuk berjaga-jaga bila TV sedang offline.
 - **Efek suara navigasi** — bunyi lembut saat fokus berpindah (berkas audio
   yang disediakan pemilik proyek), lonceng dua nada hasil sintesis saat
   memilih aplikasi, dan blip rendah saat menekan Kembali. Volume pelan,
@@ -74,6 +84,26 @@ di bawah 250 KB:
 Semua artwork adalah karya original yang dihasilkan untuk proyek ini —
 bukan poster, tangkapan layar, atau materi berhak cipta dari layanan mana
 pun. Aplikasi di luar daftar ini tetap mendapat latar gradien tergambar.
+
+## Jadwal pertandingan (v2.2)
+
+Kartu jadwal membaca `jadwal/jadwal.json` dari repo ini
+(`raw.githubusercontent.com/ardiansyahmam/orange-tv/main/jadwal/jadwal.json`).
+Berkas itu dibuat oleh `scripts/ambil-jadwal.py` (Python murni, tanpa
+dependensi) dari **TheSportsDB** — Timnas Indonesia lewat
+`eventsnext`, liga-liga Eropa lewat `eventsround` — lalu diurutkan
+menurut prioritas: Timnas dulu, big match (dua klub besar) berikutnya,
+sisanya menurut waktu kick-off. Perbarui datanya kapan pun dengan:
+
+```bash
+python3 scripts/ambil-jadwal.py
+git add jadwal/jadwal.json && git commit -m "Perbarui jadwal" && git push
+```
+
+Catatan: kunci API gratis TheSportsDB hanya memberi data terbatas
+(mis. `eventsnextleague` hanya 1 pertandingan), karena itu skrip memakai
+endpoint per-ronde. Bila suatu kompetisi kosong di API, kartunya cukup
+tidak tampil — tidak ada jadwal yang dikarang.
 
 ## Pasang lewat ADB
 

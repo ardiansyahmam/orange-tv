@@ -1,0 +1,165 @@
+{
+  "diperbarui": "2026-10-22T22:53:13Z",
+  "jadwal": [
+    {
+      "tim": "Timnas Indonesia",
+      "lawan": "Jordan",
+      "kompetisi": "International Friendlies",
+      "kandang": false,
+      "kickoff_utc": "2026-11-13T18:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Chelsea",
+      "lawan": "Tottenham Hotspur",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T16:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Barcelona",
+      "lawan": "Real Madrid",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-25T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Chelsea",
+      "lawan": "Manchester United",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T12:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Bayern Munich",
+      "lawan": "Borussia Dortmund",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T17:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "AC Milan",
+      "lawan": "Inter Milan",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T19:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Liverpool",
+      "lawan": "Arsenal",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-01T16:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Juventus",
+      "lawan": "Napoli",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-01T19:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Atlético Madrid",
+      "lawan": "Bayern Munich",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Stuttgart",
+      "lawan": "Borussia Mönchengladbach",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-23T18:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Torino",
+      "lawan": "Monza",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-10-23T18:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Ipswich Town",
+      "lawan": "Nottingham Forest",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-23T19:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Deportivo Alavés",
+      "lawan": "Málaga",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-23T19:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Aston Villa",
+      "lawan": "Manchester City",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T11:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Rayo Vallecano",
+      "lawan": "Elche",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T12:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Cagliari",
+      "lawan": "Bologna",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T13:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Como",
+      "lawan": "Sassuolo",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T13:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Mainz",
+      "lawan": "Werder Bremen",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T13:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Augsburg",
+      "lawan": "Union Berlin",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T13:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "RB Leipzig",
+      "lawan": "Elversberg",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-24T13:30:00Z",
+      "sumber": "thesportsdb"
+    }
+  ]
+}
