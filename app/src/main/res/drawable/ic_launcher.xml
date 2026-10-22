@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logo Orange TV: kotak oranye sudut membulat + segitiga putar putih.
+     Digambar sebagai vector agar tidak ada aset gambar sama sekali. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FF8A2A"
+        android:pathData="M10,4 L38,4 A6,6 0 0 1 44,10 L44,38 A6,6 0 0 1 38,44 L10,44 A6,6 0 0 1 4,38 L4,10 A6,6 0 0 1 10,4 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M19,15 L34,24 L19,33 Z" />
+</vector>

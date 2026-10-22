@@ -1,0 +1,19 @@
+// Orange TV — buildscript tingkat proyek (untuk build Gradle biasa di mesin lain).
+// APK rilis di repo ini dibangun dengan pipeline manual (lihat build-manual.sh),
+// tetapi struktur Gradle ini membuat proyek tetap bisa dibuka/dibangun normal.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.4'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

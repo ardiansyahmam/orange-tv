@@ -1,0 +1,9 @@
+# Keluaran build manual & Gradle
+build/
+app/build/
+.gradle/
+local.properties
+
+# Berkas IDE
+.idea/
+*.iml
