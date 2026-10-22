@@ -38,8 +38,8 @@ mkdir -p "$BUILD/gen" "$BUILD/classes" "$BUILD/dex"
     --java "$BUILD/gen" \
     --min-sdk-version 26 \
     --target-sdk-version 34 \
-    --version-code 1 \
-    --version-name "1.0"
+    --version-code 2 \
+    --version-name "2.0"
 
 # 3) Kompilasi Java (sumber aplikasi + R.java hasil aapt2)
 find "$ROOT/app/src/main/java" "$BUILD/gen" -name '*.java' > "$BUILD/sources.txt"

@@ -1,15 +1,34 @@
 #!/usr/bin/env python3
-"""Render simulasi Orange TV terpasang di TV — Mode Malam & Mode Siang.
-Menggambar adegan ruang (dinding + TV) dan antarmuka Orange TV dengan PIL.
+"""Render simulasi Orange TV v2 (gaya konsol modern) terpasang di TV.
+
+Perubahan dari simulasi v1: tata letak ala PS5 —
+  - latar sinematik layar penuh mengikuti aplikasi terfokus (di sini
+    Netflix: gradien merah tua + cahaya radial + bidang diagonal +
+    vignette; TANPA orang dan TANPA poster berhak cipta, murni bentuk
+    dan cahaya yang digambar dari kode),
+  - strip ikon horizontal di dekat atas; ikon terfokus (Netflix) lebih
+    besar dengan cincin oranye tipis + cahaya,
+  - klaster kanan atas: tombol bundar Input / Wi-Fi / Pengaturan + jam
+    + tanggal,
+  - kiri bawah: nama aplikasi besar ("Netflix") + deretan titik seksi,
+  - kanan bawah: kartu kaca statistik (nilai ilustratif).
+
+Mode Siang: latar yang sama diberi cucian terang, kaca jadi terang.
+Menghasilkan simulasi-tv-night-v2.png & simulasi-tv-day-v2.png
+(berkas v1 tidak ditimpa).
 """
+import math
+
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 W, H = 1920, 1080
 NOTO = "/usr/share/fonts/truetype/noto/"
 def F(name, size): return ImageFont.truetype(NOTO + name, size)
-BOLD = "NotoSans-Bold.ttf"; REG = "NotoSans-Regular.ttf"; MED = "NotoSans-Medium.ttf" if False else "NotoSans-Regular.ttf"
+BOLD = "NotoSans-Bold.ttf"; REG = "NotoSans-Regular.ttf"
 
 ORANGE = (255, 138, 30, 255)
+SW, SH = 1600, 900  # ukuran "layar" di dalam bezel TV
+
 
 def vgrad(size, top, bottom):
     w, h = size
@@ -19,122 +38,204 @@ def vgrad(size, top, bottom):
         base.putpixel((0, y), tuple(int(top[i] + (bottom[i] - top[i]) * t) for i in range(3)))
     return base.resize((w, h))
 
-def rr(d, box, r, **kw): d.rounded_rectangle(box, radius=r, **kw)
 
-def draw_orange_glyph(d, cx, cy, r):
-    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 149, 0, 255))
-    d.ellipse([cx - r + 5, cy - r + 4, cx + r - 16, cy + r - 20], fill=(255, 176, 64, 160))
-    d.polygon([(cx + 2, cy - r - 2), (cx + r + 4, cy - r - 10), (cx + r - 2, cy - r + 6), (cx + 4, cy - r + 6)], fill=(74, 160, 74, 255))
+def rr(d, box, r, **kw):
+    d.rounded_rectangle(box, radius=r, **kw)
+
+
+def radial_alpha(w, h, inner=0.55, max_alpha=175):
+    """Peta alpha vignette kecil: 0 di tengah, max_alpha di sudut."""
+    small = Image.new("L", (200, 113), 0)
+    px = small.load()
+    cx, cy = 100, 56
+    maxd = math.hypot(cx, cy)
+    for y in range(113):
+        for x in range(200):
+            d = math.hypot(x - cx, y - cy) / maxd
+            a = 0
+            if d > inner:
+                a = int(max_alpha * min(1.0, (d - inner) / (1.0 - inner)))
+            px[x, y] = a
+    return small.resize((w, h), Image.BICUBIC)
+
+
+def draw_backdrop(night):
+    """Latar sinematik Netflix: merah tua nyaris hitam + cahaya lembut."""
+    # Gradien diagonal dasar
+    img = Image.new("RGBA", (SW, SH), (10, 3, 4, 255))
+    grad = vgrad((SW, SH), (24, 5, 9), (8, 2, 3)).convert("RGBA")
+    img.alpha_composite(grad)
+
+    # Cahaya radial utama (kanan-atas)
+    glow = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    gd.ellipse([SW * 0.34, -SH * 0.42, SW * 1.14, SH * 0.62], fill=(196, 10, 22, 120))
+    gd.ellipse([-SW * 0.24, SH * 0.52, SW * 0.30, SH * 1.24], fill=(140, 8, 18, 66))
+    img.alpha_composite(glow.filter(ImageFilter.GaussianBlur(130)))
+
+    # Bidang cahaya diagonal sangat halus
+    shapes = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shapes)
+    sd.polygon([(SW * 0.60, -80), (SW * 0.68, -80), (SW * 0.40, SH + 80), (SW * 0.30, SH + 80)],
+               fill=(255, 255, 255, 14))
+    sd.polygon([(SW * 0.74, -80), (SW * 0.92, -80), (SW * 0.60, SH + 80), (SW * 0.44, SH + 80)],
+               fill=(255, 90, 90, 12))
+    img.alpha_composite(shapes.filter(ImageFilter.GaussianBlur(6)))
+
+    # Vignette
+    black = Image.new("RGBA", (SW, SH), (0, 0, 0, 255))
+    black.putalpha(radial_alpha(SW, SH, max_alpha=175 if night else 100))
+    img.alpha_composite(black)
+
+    if not night:
+        # Cucian terang hangat (mode Siang)
+        img.alpha_composite(Image.new("RGBA", (SW, SH), (244, 236, 221, 208)))
+    return img
+
+
+def glyph_tile(d, cx, cy, s, color, glyph=None, glyph_color=(255, 255, 255, 255),
+               triangle=False, gear=False):
+    box = [cx - s // 2, cy - s // 2, cx + s // 2, cy + s // 2]
+    rr(d, box, 15, fill=color)
+    if triangle:
+        r = s // 5
+        d.polygon([(cx - r + 3, cy - r), (cx - r + 3, cy + r), (cx + r + 2, cy)], fill=(255, 255, 255, 255))
+    elif gear:
+        r = s // 4
+        for a in range(0, 360, 45):
+            x2 = cx + int((r + 5) * math.cos(math.radians(a)))
+            y2 = cy + int((r + 5) * math.sin(math.radians(a)))
+            d.line([cx, cy, x2, y2], fill=(255, 255, 255, 255), width=5)
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 255, 255, 255))
+        d.ellipse([cx - 6, cy - 6, cx + 6, cy + 6], fill=color)
+    elif glyph:
+        f = F(BOLD, int(s * 0.44))
+        gw = d.textlength(glyph, font=f)
+        d.text((cx - gw / 2, cy - s * 0.30), glyph, font=f, fill=glyph_color)
+
 
 def draw_ui(mode):
-    """Gambar antarmuka Orange TV pada kanvas 1600x900."""
+    """Gambar antarmuka Orange TV v2 pada kanvas 1600x900."""
     night = mode == "night"
-    if night:
-        img = vgrad((1600, 900), (11, 13, 18), (26, 20, 15)).convert("RGBA")
-        text = (242, 243, 245, 255); sub = (242, 243, 245, 165)
-        tile_fill = (255, 255, 255, 18); tile_rim = (255, 255, 255, 58)
-        tile_focus_fill = (255, 255, 255, 34)
-    else:
-        img = vgrad((1600, 900), (253, 243, 227), (238, 243, 247)).convert("RGBA")
-        text = (35, 39, 46, 255); sub = (35, 39, 46, 165)
-        tile_fill = (255, 255, 255, 140); tile_rim = (255, 255, 255, 235)
-        tile_focus_fill = (255, 255, 255, 215)
-    ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    img = draw_backdrop(night)
+    ov = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
     d = ImageDraw.Draw(ov)
-    pad = 60; inner_w = 1600 - 2 * pad
 
-    # --- top bar ---
-    logo_box = [pad, 42, pad + 46, 88]
-    rr(d, logo_box, 14, fill=(255, 154, 32, 255))
-    draw_orange_glyph(d, pad + 23, 65, 13)
-    d.text((pad + 62, 40), "Orange TV", font=F(BOLD, 34), fill=text)
-    d.text((pad + 63, 80), "Buat TV lamamu segar kembali", font=F(REG, 15), fill=sub)
-    # clock right
-    clk = "19:30"; f_clk = F(BOLD, 38)
-    tw = d.textlength(clk, font=f_clk)
-    d.text((1600 - pad - tw, 36), clk, font=f_clk, fill=text)
-    dt = "Jumat, 23 Oktober 2026"; f_dt = F(REG, 16)
-    tw2 = d.textlength(dt, font=f_dt)
-    d.text((1600 - pad - tw2, 82), dt, font=f_dt, fill=sub)
-    chip = "Mode Malam" if night else "Mode Siang"; f_chip = F(BOLD, 15)
-    cw = d.textlength(chip, font=f_chip) + 30
-    chip_box = [1600 - pad - cw, 110, 1600 - pad, 140]
-    rr(d, chip_box, 15, outline=ORANGE, width=2)
-    d.text((chip_box[0] + 15, 117), chip, font=f_chip, fill=ORANGE)
+    if night:
+        text = (245, 246, 248, 255); sub = (245, 246, 248, 170)
+        tile_fill = (255, 255, 255, 26); tile_rim = (255, 255, 255, 64)
+        btn_fill = (255, 255, 255, 30)
+        card_fill = (18, 18, 22, 150); dot_off = (255, 255, 255, 90)
+    else:
+        text = (36, 34, 30, 255); sub = (36, 34, 30, 175)
+        tile_fill = (255, 255, 255, 150); tile_rim = (255, 255, 255, 235)
+        btn_fill = (255, 255, 255, 165)
+        card_fill = (255, 255, 255, 165); dot_off = (36, 34, 30, 110)
 
-    def tile(x, y, w, h, icon_fn, label, focused=False):
-        if not night:  # bayangan lembut untuk mode siang
-            sh = Image.new("RGBA", img.size, (0, 0, 0, 0))
-            ImageDraw.Draw(sh).rounded_rectangle([x + 3, y + 7, x + w + 3, y + h + 7], radius=20, fill=(120, 90, 40, 42))
-            ov.alpha_composite(sh.filter(ImageFilter.GaussianBlur(6)))
-        rr(d, [x, y, x + w, y + h], 20, fill=tile_focus_fill if focused else tile_fill, outline=tile_rim, width=1)
-        d.line([x + 14, y + 1.5, x + w - 14, y + 1.5], fill=(255, 255, 255, 90 if night else 160), width=1)
-        if focused:
-            rr(d, [x - 2, y - 2, x + w + 2, y + h + 2], 22, outline=ORANGE, width=3)
-        icon_fn(x + w // 2, y + h // 2 - 16)
-        f_lab = F(MED, 20)
-        lw = d.textlength(label, font=f_lab)
-        d.text((x + (w - lw) / 2, y + h - 42), label, font=f_lab, fill=text)
+    pad = 64
 
-    def icon_box(color, glyph=None, glyph_color=(255, 255, 255, 255), big=True, triangle=False, gear=False):
-        s = 64 if big else 48
-        def fn(cx, cy):
-            box = [cx - s // 2, cy - s // 2, cx + s // 2, cy + s // 2]
-            rr(d, box, 16 if big else 13, fill=color)
-            if triangle:
-                r = 13 if big else 10
-                d.polygon([(cx - r + 3, cy - r), (cx - r + 3, cy + r), (cx + r + 2, cy)], fill=(255, 255, 255, 255))
-            elif gear:
-                r = 15 if big else 12
-                for a in range(0, 360, 45):
-                    import math
-                    x2 = cx + int((r + 5) * math.cos(math.radians(a))); y2 = cy + int((r + 5) * math.sin(math.radians(a)))
-                    d.line([cx, cy, x2, y2], fill=(255, 255, 255, 255), width=5)
-                d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(255, 255, 255, 255))
-                d.ellipse([cx - 6, cy - 6, cx + 6, cy + 6], fill=color)
-            elif glyph:
-                f = F(BOLD, 30 if big else 22)
-                gw = d.textlength(glyph, font=f)
-                d.text((cx - gw / 2, cy - (19 if big else 15)), glyph, font=f, fill=glyph_color)
-        return fn
+    # ---------- klaster kanan atas: tombol bundar + jam + tanggal ----------
+    clock = "19:30"; f_clk = F(BOLD, 36)
+    cw = d.textlength(clock, font=f_clk)
+    clock_x = SW - pad - cw
+    d.text((clock_x, 30), clock, font=f_clk, fill=text)
+    date = "JUMAT, 23 OKTOBER 2026"; f_date = F(BOLD, 14)
+    dw = d.textlength(date, font=f_date)
+    d.text((SW - pad - dw, 76), date, font=f_date, fill=sub)
 
-    # --- FAVORIT ---
-    y_sec = 196
-    d.text((pad, y_sec), "F A V O R I T", font=F(BOLD, 19), fill=sub)
-    favs = [
-        (icon_box((229, 50, 45, 255), triangle=True), "YouTube", True),
-        (icon_box((20, 20, 20, 255), glyph="N", glyph_color=(229, 9, 20, 255)), "Netflix", False),
-        (icon_box((14, 58, 93, 255), glyph="We"), "WeTV", False),
-        (icon_box((228, 0, 70, 255), glyph="V"), "Vidio", False),
-        (icon_box((29, 185, 84, 255), glyph="S"), "Spotify", False),
-    ]
-    tw_, th_, gap = 280, 164, 20
-    x = pad
-    for fn, lab, foc in favs:
-        tile(x, y_sec + 34, tw_, th_, fn, lab, focused=foc)
-        x += tw_ + gap
+    def circle_btn(cx, cy, kind):
+        r = 25
+        rr(d, [cx - r, cy - r, cx + r, cy + r], r, fill=btn_fill, outline=tile_rim, width=1)
+        if kind == "input":
+            rr(d, [cx - 11, cy - 8, cx + 11, cy + 8], 3, outline=text, width=2)
+            d.polygon([(cx - 4, cy - 5), (cx - 4, cy + 5), (cx + 6, cy)], fill=text)
+        elif kind == "wifi":
+            for i, rad in enumerate((8, 14, 20)):
+                d.arc([cx - rad, cy - rad + 4, cx + rad, cy + rad + 4], 218, 322, fill=text, width=2)
+            d.ellipse([cx - 2.5, cy + 6, cx + 2.5, cy + 11], fill=text)
+        elif kind == "gear":
+            glyph_tile(d, cx, cy, 30, (0, 0, 0, 0), gear=True)
 
-    # --- SEMUA APLIKASI ---
-    y_sec2 = 470
-    d.text((pad, y_sec2), "S E M U A   A P L I K A S I", font=F(BOLD, 19), fill=sub)
+    cy_btn = 52
+    circle_btn(clock_x - 190, cy_btn, "input")
+    circle_btn(clock_x - 128, cy_btn, "wifi")
+    circle_btn(clock_x - 66, cy_btn, "gear")
+
+    # ---------- strip ikon (Favorit + semua aplikasi, satu baris) ----------
+    strip_y = 108
+    tile = 96
+    gap = 18
     apps = [
-        (icon_box((27, 42, 107, 255), glyph="D+", big=False), "Disney+"),
-        (icon_box((0, 168, 225, 255), glyph="P", big=False), "Prime Video"),
-        (icon_box((229, 50, 45, 255), triangle=True, big=False), "YT Music"),
-        (icon_box((91, 100, 112, 255), gear=True, big=False), "Pengaturan TV"),
+        ("yt", (229, 50, 45, 255), {"triangle": True}),
+        ("wetv", (14, 58, 93, 255), {"glyph": "We"}),
+        ("netflix", None, {}),
+        ("vidio", (228, 0, 70, 255), {"glyph": "V"}),
+        ("disney", (27, 42, 107, 255), {"glyph": "D+"}),
+        ("prime", (0, 168, 225, 255), {"glyph": "P"}),
+        ("spotify", (29, 185, 84, 255), {"glyph": "S"}),
     ]
     x = pad
-    for fn, lab in apps:
-        tile(x, y_sec2 + 34, tw_, 128, fn, lab)
-        x += tw_ + gap
+    center_y = strip_y + tile // 2
+    for name, color, kw in apps:
+        if name == "netflix":
+            big = 122
+            bx, by = x, center_y - big // 2
+            # cahaya oranye lembut di belakang ubin terfokus
+            glow = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+            ImageDraw.Draw(glow).rounded_rectangle(
+                [bx - 16, by - 16, bx + big + 16, by + big + 16], radius=30,
+                fill=(255, 138, 30, 80))
+            ov.alpha_composite(glow.filter(ImageFilter.GaussianBlur(16)))
+            d = ImageDraw.Draw(ov)
+            rr(d, [bx, by, bx + big, by + big], 24, fill=(246, 246, 246, 255))
+            rr(d, [bx - 3, by - 3, bx + big + 3, by + big + 3], 27, outline=ORANGE, width=4)
+            f_nf = F(BOLD, 23)
+            tw = d.textlength("NETFLIX", font=f_nf)
+            d.text((bx + (big - tw) / 2, by + big / 2 - 15), "NETFLIX", font=f_nf,
+                   fill=(200, 8, 20, 255))
+            x += big + gap
+        else:
+            if not night:
+                sh = Image.new("RGBA", (SW, SH), (0, 0, 0, 0))
+                ImageDraw.Draw(sh).rounded_rectangle(
+                    [x + 3, strip_y + 7, x + tile + 3, strip_y + tile + 7], radius=22,
+                    fill=(120, 90, 40, 40))
+                ov.alpha_composite(sh.filter(ImageFilter.GaussianBlur(6)))
+                d = ImageDraw.Draw(ov)
+            rr(d, [x, strip_y, x + tile, strip_y + tile], 22,
+               fill=tile_fill, outline=tile_rim, width=1)
+            glyph_tile(d, x + tile // 2, center_y, 54, color, **kw)
+            x += tile + gap
 
-    # --- hint ---
-    hint = "Tekan lama OK untuk tambah/hapus Favorit  ·  Ganti Mode Siang/Malam di Pengaturan"
-    f_hint = F(REG, 16)
-    hw = d.textlength(hint, font=f_hint)
-    d.text(((1600 - hw) / 2, 852), hint, font=f_hint, fill=sub)
+    # ---------- kiri bawah: nama besar + titik seksi ----------
+    f_name = F(BOLD, 58)
+    d.text((pad, SH - 168), "Netflix", font=f_name, fill=text)
+    dot_y = SH - 74
+    dx = pad
+    for i in range(7):
+        if i == 2:
+            rr(d, [dx, dot_y, dx + 26, dot_y + 9], 4, fill=text)
+            dx += 26 + 10
+        else:
+            d.ellipse([dx, dot_y, dx + 9, dot_y + 9], fill=dot_off)
+            dx += 9 + 10
+
+    # ---------- kanan bawah: kartu info kaca ----------
+    card_w, card_h = 452, 106
+    cx0, cy0 = SW - pad - card_w, SH - 56 - card_h
+    rr(d, [cx0, cy0, cx0 + card_w, cy0 + card_h], 20, fill=card_fill,
+       outline=tile_rim, width=1)
+    f_lab = F(REG, 15); f_val = F(BOLD, 31)
+    d.text((cx0 + 24, cy0 + 18), "Waktu Layar Minggu Ini", font=f_lab, fill=sub)
+    d.text((cx0 + 24, cy0 + 44), "3,5 jam", font=f_val, fill=text)
+    mid = cx0 + card_w // 2
+    d.line([mid, cy0 + 18, mid, cy0 + card_h - 18], fill=tile_rim, width=1)
+    d.text((mid + 24, cy0 + 18), "Penyimpanan Terpakai", font=f_lab, fill=sub)
+    d.text((mid + 24, cy0 + 44), "180 MB", font=f_val, fill=text)
+
     img.alpha_composite(ov)
     return img
+
 
 def scene(mode):
     night = mode == "night"
@@ -143,36 +244,32 @@ def scene(mode):
     else:
         canvas = vgrad((W, H), (214, 205, 190), (178, 168, 152)).convert("RGBA")
     d = ImageDraw.Draw(canvas)
-    # lantai
     d.rectangle([0, 1000, W, H], fill=(10, 10, 12, 255) if night else (150, 140, 124, 255))
-    # bayangan TV di dinding & lantai
     sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(sh).rounded_rectangle([150, 84, 1790, 1006], radius=30, fill=(0, 0, 0, 110 if night else 70))
+    ImageDraw.Draw(sh).rounded_rectangle([150, 84, 1790, 1006], radius=30,
+                                          fill=(0, 0, 0, 110 if night else 70))
     canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(18)))
     d = ImageDraw.Draw(canvas)
-    # kaki TV
     d.rectangle([920, 986, 1000, 1028], fill=(16, 16, 18, 255))
     d.rounded_rectangle([800, 1024, 1120, 1042], radius=9, fill=(16, 16, 18, 255))
     d.ellipse([760, 1036, 1160, 1058], fill=(0, 0, 0, 90))
-    # bezel
     d.rounded_rectangle([136, 54, 1784, 990], radius=26, fill=(8, 8, 10, 255))
     d.rounded_rectangle([136, 54, 1784, 990], radius=26, outline=(52, 52, 58, 255), width=2)
-    # layar
     ui = draw_ui(mode)
     canvas.alpha_composite(ui, (160, 78))
-    # pantulan cahaya halus di pojok layar
     refl = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     rd = ImageDraw.Draw(refl)
-    rd.polygon([(160, 78), (760, 78), (420, 978), (160, 978)], fill=(255, 255, 255, 14 if night else 22))
+    rd.polygon([(160, 78), (760, 78), (420, 978), (160, 978)],
+               fill=(255, 255, 255, 14 if night else 22))
     canvas.alpha_composite(refl.filter(ImageFilter.GaussianBlur(30)))
-    # merek kecil di bezel bawah
     f = F(REG, 15)
     label = "ORANGE TV"
     lw = d.textlength(label, font=f)
     d.text(((W - lw) / 2, 1000 - 34), label, font=f, fill=(140, 140, 148, 255))
     return canvas.convert("RGB")
 
+
 for m in ("night", "day"):
-    out = f"/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-{m}.png"
+    out = f"/home/hatch/workspace/orange-tv/simulasi/simulasi-tv-{m}-v2.png"
     scene(m).save(out)
     print("saved", out)
