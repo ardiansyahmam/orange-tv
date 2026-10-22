@@ -10,6 +10,11 @@ sedang dipilih, dan nama aplikasi tampil besar di kiri bawah. Warna oranye
 hanya hadir sebagai sentuhan tipis — cincin fokus, logo kecil, dan garis
 aksen — selebihnya kaca netral yang bersih.
 
+> **v2.2.1 (hotfix)** — intent-filter `MainActivity` sekarang mencantumkan
+> kategori `android.intent.category.HOME`. Kategori ini hilang di v2.2
+> sehingga launcher tidak pernah bisa dipilih sebagai aplikasi Beranda
+> bawaan; v2.2.1 hanya memperbaiki itu, tanpa perubahan fitur lain.
+
 ## Fitur
 
 - **Strip ikon ala konsol** — satu baris horizontal berisi **Favorit**, lalu
