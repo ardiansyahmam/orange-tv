@@ -38,8 +38,8 @@ mkdir -p "$BUILD/gen" "$BUILD/classes" "$BUILD/dex"
     --java "$BUILD/gen" \
     --min-sdk-version 26 \
     --target-sdk-version 34 \
-    --version-code 6 \
-    --version-name "2.2.2"
+    --version-code 7 \
+    --version-name "2.2.3"
 
 # 3) Kompilasi Java (sumber aplikasi + R.java hasil aapt2)
 find "$ROOT/app/src/main/java" "$BUILD/gen" -name '*.java' > "$BUILD/sources.txt"
@@ -60,7 +60,7 @@ cp "$BUILD/unsigned.apk" "$BUILD/app.apk"
     --out "$ROOT/orange-tv.apk" "$BUILD/aligned.apk"
 
 # 6) Salinan pengiriman berversi + verifikasi
-cp "$ROOT/orange-tv.apk" "$ROOT/orange-tv-v222.apk"
+cp "$ROOT/orange-tv.apk" "$ROOT/orange-tv-v223.apk"
 "$BT/apksigner" verify --verbose "$ROOT/orange-tv.apk"
 "$BT/aapt2" dump badging "$ROOT/orange-tv.apk" | head -5
-ls -l "$ROOT/orange-tv.apk" "$ROOT/orange-tv-v222.apk"
+ls -l "$ROOT/orange-tv.apk" "$ROOT/orange-tv-v223.apk"

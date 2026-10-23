@@ -209,6 +209,7 @@ public class MainActivity extends Activity {
     private View buildScreen() {
         FrameLayout root = new FrameLayout(this);
         root.setFocusable(false); // wadah tidak boleh merebut fokus D-pad
+        root.setClipChildren(false); // v2.2.3: ubin terfokus boleh meluber keluar selnya
 
         // Latar sinematik dua lapis untuk crossfade.
         backdropFront = new ImageView(this);
@@ -232,6 +233,7 @@ public class MainActivity extends Activity {
         // Kolom atas: bar merek+klaster, lalu strip.
         LinearLayout topColumn = new LinearLayout(this);
         topColumn.setFocusable(false);
+        topColumn.setClipChildren(false); // v2.2.3: jangan potong ubin yang membesar
         topColumn.setOrientation(LinearLayout.VERTICAL);
         int padX = TileFactory.dp(this, 48);
         topColumn.setPadding(padX, TileFactory.dp(this, 26), padX, 0);
@@ -247,11 +249,13 @@ public class MainActivity extends Activity {
         stripScroll.setHorizontalScrollBarEnabled(false);
         stripScroll.setOverScrollMode(View.OVER_SCROLL_NEVER);
         stripScroll.setClipToPadding(false);
+        stripScroll.setClipChildren(false); // v2.2.3: ubin terfokus boleh meluber (pop ala PS5)
         stripContainer = new LinearLayout(this);
         stripContainer.setFocusable(false);
         stripContainer.setOrientation(LinearLayout.HORIZONTAL);
         stripContainer.setGravity(Gravity.CENTER_VERTICAL);
         stripContainer.setClipToPadding(false);
+        stripContainer.setClipChildren(false); // v2.2.3: akar kliping lama — matikan
         stripContainer.setPadding(TileFactory.dp(this, 8), TileFactory.dp(this, 20),
                 TileFactory.dp(this, 28), TileFactory.dp(this, 20));
         stripScroll.addView(stripContainer);
@@ -324,6 +328,7 @@ public class MainActivity extends Activity {
     private FrameLayout buildTopBar(LinearLayout parent) {
         LinearLayout bar = new LinearLayout(this);
         bar.setFocusable(false);
+        bar.setClipChildren(false); // v2.2.3: tombol/chip klaster yang membesar tidak terpotong
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setGravity(Gravity.CENTER_VERTICAL);
         parent.addView(bar);
@@ -408,7 +413,7 @@ public class MainActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 v.setBackground(chipBackground(hasFocus));
-                v.animate().scaleX(hasFocus ? 1.06f : 1f).scaleY(hasFocus ? 1.06f : 1f)
+                v.animate().scaleX(hasFocus ? 1.15f : 1f).scaleY(hasFocus ? 1.15f : 1f)
                         .setDuration(150).start();
             }
         });
@@ -474,7 +479,7 @@ public class MainActivity extends Activity {
         GradientDrawable d = new GradientDrawable();
         d.setColor(theme.chipFill);
         d.setCornerRadius(TileFactory.dp(this, 999));
-        d.setStroke(TileFactory.dp(this, focused ? 2.5f : 1f), UiTheme.ACCENT);
+        d.setStroke(TileFactory.dp(this, focused ? 4f : 1f), UiTheme.ACCENT);
         return d;
     }
 

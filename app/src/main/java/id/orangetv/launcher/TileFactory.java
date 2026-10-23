@@ -15,7 +15,7 @@ import android.widget.TextView;
  *
  * Ubin strip = kotak kaca membulat berisi ikon saja, tanpa label — nama
  * aplikasi tampil besar di kiri bawah layar. Saat terfokus, ubin membesar
- * ~1,25x, terangkat, dan pinggirnya menjadi cincin ORANYE TIPIS — sentuhan
+ * ~1,42x, terangkat, dan pinggirnya menjadi cincin ORANYE TEBAL — sentuhan
  * oranye khas Orange TV, tetap hemat seperti prinsip v1.
  */
 public final class TileFactory {
@@ -37,7 +37,7 @@ public final class TileFactory {
                         : new int[]{theme.tileTop, theme.tileBottom});
         d.setCornerRadius(dp(c, cornerDp));
         if (focused) {
-            d.setStroke(dp(c, 2.5f), UiTheme.ACCENT); // cincin oranye tipis
+            d.setStroke(dp(c, 4f), UiTheme.ACCENT); // cincin oranye tebal (v2.2.3)
         } else {
             d.setStroke(dp(c, 1), theme.tileRim);
         }
@@ -53,7 +53,7 @@ public final class TileFactory {
                         : new int[]{theme.tileTop, theme.tileBottom});
         d.setShape(GradientDrawable.OVAL);
         if (focused) {
-            d.setStroke(dp(c, 2.5f), UiTheme.ACCENT);
+            d.setStroke(dp(c, 4f), UiTheme.ACCENT);
         } else {
             d.setStroke(dp(c, 1), theme.tileRim);
         }
@@ -90,16 +90,16 @@ public final class TileFactory {
 
         tile.setBackground(glass(theme, c, false, 20));
         tile.setElevation(dp(c, 2));
-        tile.setAlpha(0.78f);
+        tile.setAlpha(0.70f);
         tile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 v.setBackground(glass(theme, v.getContext(), hasFocus, 20));
-                v.setElevation(dp(v.getContext(), hasFocus ? 16 : 2));
+                v.setElevation(dp(v.getContext(), hasFocus ? 24 : 2));
                 v.animate()
-                        .scaleX(hasFocus ? 1.25f : 1.0f)
-                        .scaleY(hasFocus ? 1.25f : 1.0f)
-                        .alpha(hasFocus ? 1.0f : 0.78f)
+                        .scaleX(hasFocus ? 1.42f : 1.0f)
+                        .scaleY(hasFocus ? 1.42f : 1.0f)
+                        .alpha(hasFocus ? 1.0f : 0.70f)
                         .setDuration(160)
                         .start();
                 if (hasFocus) {
@@ -132,16 +132,16 @@ public final class TileFactory {
 
         tile.setBackground(glass(theme, c, false, 20));
         tile.setElevation(dp(c, 2));
-        tile.setAlpha(0.78f);
+        tile.setAlpha(0.70f);
         tile.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 v.setBackground(glass(theme, v.getContext(), hasFocus, 20));
-                v.setElevation(dp(v.getContext(), hasFocus ? 16 : 2));
+                v.setElevation(dp(v.getContext(), hasFocus ? 24 : 2));
                 v.animate()
-                        .scaleX(hasFocus ? 1.25f : 1.0f)
-                        .scaleY(hasFocus ? 1.25f : 1.0f)
-                        .alpha(hasFocus ? 1.0f : 0.78f)
+                        .scaleX(hasFocus ? 1.42f : 1.0f)
+                        .scaleY(hasFocus ? 1.42f : 1.0f)
+                        .alpha(hasFocus ? 1.0f : 0.70f)
                         .setDuration(160)
                         .start();
                 if (hasFocus) {
@@ -179,8 +179,8 @@ public final class TileFactory {
                 v.setBackground(circleGlass(theme, v.getContext(), hasFocus));
                 v.setElevation(dp(v.getContext(), hasFocus ? 10 : 2));
                 v.animate()
-                        .scaleX(hasFocus ? 1.12f : 1.0f)
-                        .scaleY(hasFocus ? 1.12f : 1.0f)
+                        .scaleX(hasFocus ? 1.28f : 1.0f)
+                        .scaleY(hasFocus ? 1.28f : 1.0f)
                         .setDuration(150)
                         .start();
             }

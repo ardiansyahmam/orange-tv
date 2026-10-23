@@ -10,6 +10,17 @@ sedang dipilih, dan nama aplikasi tampil besar di kiri bawah. Warna oranye
 hanya hadir sebagai sentuhan tipis — cincin fokus, logo kecil, dan garis
 aksen — selebihnya kaca netral yang bersih.
 
+> **v2.2.3 (hotfix)** — penanda fokus dibuat jauh lebih kentara. Di TV asli
+> animasi membesar ubin ternyata terpotong kliping wadahnya, sehingga dari
+> jarak sofa tak terlihat ubin mana yang sedang dipilih. Kini kliping anak
+> dimatikan pada strip dan seluruh wadah di atasnya (ubin terfokus meluber
+> keluar selnya, menimpa tetangga — pop ala PS5), skala fokus ubin naik
+> 1,25x → 1,42x, cincin oranye fokus menebal 2,5dp → 4dp, elevation fokus
+> naik ke 24, dan ubin yang tak terfokus lebih redup (alpha 0,70) demi
+> kontras. Tombol bundar klaster ikut diperjelas (skala 1,28x, cincin 4dp)
+> dan chip mode juga (skala 1,15x, cincin 4dp). Graf fokus v2.2.2 dan fitur
+> lain tidak berubah.
+
 > **v2.2.2 (hotfix)** — navigasi remote kini memakai graf fokus 4 arah yang
 > eksplisit: Kiri/Kanan di strip dan di klaster kanan atas dirantai satu
 > per satu, Bawah pada ubin menahan fokus di tempat, dan wadah (strip,
@@ -27,8 +38,8 @@ aksen — selebihnya kaca netral yang bersih.
 
 - **Strip ikon ala konsol** — satu baris horizontal berisi **Favorit**, lalu
   **Semua Aplikasi**, lalu ubin alat (Mode, Efek Suara, Izin Waktu Layar,
-  Muat Ulang). Ubin hanya berisi ikon; yang terfokus membesar ~1,25x dengan
-  cincin oranye tipis dan cahayanya sendiri. Satu baris berarti navigasi
+  Muat Ulang). Ubin hanya berisi ikon; yang terfokus membesar ~1,42x dengan
+  cincin oranye tebal dan cahayanya sendiri. Satu baris berarti navigasi
   remote cukup kiri/kanan — paling mudah ditebak. Titik-titik kecil di kiri
   bawah menandai seksi yang sedang aktif.
 - **Latar sinematik dinamis** — setiap aplikasi punya latar layar penuh.
