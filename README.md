@@ -10,6 +10,14 @@ sedang dipilih, dan nama aplikasi tampil besar di kiri bawah. Warna oranye
 hanya hadir sebagai sentuhan tipis — cincin fokus, logo kecil, dan garis
 aksen — selebihnya kaca netral yang bersih.
 
+> **v2.2.2 (hotfix)** — navigasi remote kini memakai graf fokus 4 arah yang
+> eksplisit: Kiri/Kanan di strip dan di klaster kanan atas dirantai satu
+> per satu, Bawah pada ubin menahan fokus di tempat, dan wadah (strip,
+> kartu, bar atas) tidak bisa difokus. Di v2.2.1 hanya Atas/Bawah yang
+> dirantai dan Kiri/Kanan mengandalkan pencarian fokus geometris Android,
+> yang di TV asli membuat fokus tersangkut berputar di sekitar klaster
+> kanan atas dan ubin-ubin awal strip. Tanpa perubahan fitur lain.
+
 > **v2.2.1 (hotfix)** — intent-filter `MainActivity` sekarang mencantumkan
 > kategori `android.intent.category.HOME`. Kategori ini hilang di v2.2
 > sehingga launcher tidak pernah bisa dipilih sebagai aplikasi Beranda

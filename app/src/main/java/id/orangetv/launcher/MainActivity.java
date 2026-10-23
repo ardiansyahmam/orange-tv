@@ -208,6 +208,7 @@ public class MainActivity extends Activity {
 
     private View buildScreen() {
         FrameLayout root = new FrameLayout(this);
+        root.setFocusable(false); // wadah tidak boleh merebut fokus D-pad
 
         // Latar sinematik dua lapis untuk crossfade.
         backdropFront = new ImageView(this);
@@ -230,6 +231,7 @@ public class MainActivity extends Activity {
 
         // Kolom atas: bar merek+klaster, lalu strip.
         LinearLayout topColumn = new LinearLayout(this);
+        topColumn.setFocusable(false);
         topColumn.setOrientation(LinearLayout.VERTICAL);
         int padX = TileFactory.dp(this, 48);
         topColumn.setPadding(padX, TileFactory.dp(this, 26), padX, 0);
@@ -241,10 +243,12 @@ public class MainActivity extends Activity {
         FrameLayout firstClusterButton = buildTopBar(topColumn);
 
         stripScroll = new HorizontalScrollView(this);
+        stripScroll.setFocusable(false); // fokus hidup di ubin, bukan wadahnya
         stripScroll.setHorizontalScrollBarEnabled(false);
         stripScroll.setOverScrollMode(View.OVER_SCROLL_NEVER);
         stripScroll.setClipToPadding(false);
         stripContainer = new LinearLayout(this);
+        stripContainer.setFocusable(false);
         stripContainer.setOrientation(LinearLayout.HORIZONTAL);
         stripContainer.setGravity(Gravity.CENTER_VERTICAL);
         stripContainer.setClipToPadding(false);
@@ -272,6 +276,7 @@ public class MainActivity extends Activity {
 
         // Kiri bawah: nama besar + titik seksi.
         LinearLayout bottomLeft = new LinearLayout(this);
+        bottomLeft.setFocusable(false);
         bottomLeft.setOrientation(LinearLayout.VERTICAL);
         bigName = new TextView(this);
         bigName.setTextColor(theme.textPrimary);
@@ -318,6 +323,7 @@ public class MainActivity extends Activity {
     /** Bar atas: merek mungil di kiri; klaster Input/Wi-Fi/Pengaturan + chip + jam di kanan. */
     private FrameLayout buildTopBar(LinearLayout parent) {
         LinearLayout bar = new LinearLayout(this);
+        bar.setFocusable(false);
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setGravity(Gravity.CENTER_VERTICAL);
         parent.addView(bar);
@@ -475,6 +481,7 @@ public class MainActivity extends Activity {
     /** Kartu kaca kanan bawah: Waktu Layar Minggu Ini | Penyimpanan Terpakai. */
     private View buildStatsCard() {
         LinearLayout card = new LinearLayout(this);
+        card.setFocusable(false); // kartu info hanya-tampil
         card.setOrientation(LinearLayout.HORIZONTAL);
         card.setGravity(Gravity.CENTER_VERTICAL);
         card.setPadding(TileFactory.dp(this, 20), TileFactory.dp(this, 14),
@@ -683,13 +690,34 @@ public class MainActivity extends Activity {
 
         buildDots();
 
-        // Rajut fokus Atas/Bawah antara strip dan klaster kanan atas.
+        // Rajut graf fokus 4 arah yang eksplisit (v2.2.2). Jangan andalkan
+        // FocusFinder geometris untuk Kiri/Kanan: di TV asli fokus
+        // tersangkut berputar di klaster kanan atas dan ubin-ubin awal
+        // strip. Kini semua arah ditentukan secara pasti:
+        //   strip  : Kiri/Kanan menyusuri urutan tileInfos; Atas ->
+        //            tombol pertama klaster; Bawah -> ubin itu sendiri
+        //            (fokus diam, tidak mengembara).
+        //   klaster: Kiri/Kanan menyusuri [Input, Wi-Fi, Pengaturan,
+        //            chip mode]; Bawah -> ubin pertama strip; Atas ->
+        //            dirinya sendiri (tetap).
+        // Ujung-ujung rantai memakai View.NO_ID (tidak ada target tegas).
         if (!tileInfos.isEmpty() && pendingClusterFocusTarget != null) {
             int firstTileId = tileInfos.get(0).view.getId();
-            for (TileInfo info : tileInfos) {
-                info.view.setNextFocusUpId(pendingClusterFocusTarget.getId());
+            int clusterFirstId = pendingClusterFocusTarget.getId();
+            int lastTile = tileInfos.size() - 1;
+            for (int i = 0; i < tileInfos.size(); i++) {
+                View v = tileInfos.get(i).view;
+                v.setNextFocusLeftId(i > 0 ? tileInfos.get(i - 1).view.getId() : View.NO_ID);
+                v.setNextFocusRightId(i < lastTile ? tileInfos.get(i + 1).view.getId() : View.NO_ID);
+                v.setNextFocusUpId(clusterFirstId);
+                v.setNextFocusDownId(v.getId());
             }
-            for (View v : clusterViews) {
+            int lastCluster = clusterViews.size() - 1;
+            for (int j = 0; j < clusterViews.size(); j++) {
+                View v = clusterViews.get(j);
+                v.setNextFocusLeftId(j > 0 ? clusterViews.get(j - 1).getId() : View.NO_ID);
+                v.setNextFocusRightId(j < lastCluster ? clusterViews.get(j + 1).getId() : View.NO_ID);
+                v.setNextFocusUpId(v.getId());
                 v.setNextFocusDownId(firstTileId);
             }
         }
