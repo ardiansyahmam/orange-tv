@@ -18,8 +18,17 @@ aksen — selebihnya kaca netral yang bersih.
 > 1,25x → 1,42x, cincin oranye fokus menebal 2,5dp → 4dp, elevation fokus
 > naik ke 24, dan ubin yang tak terfokus lebih redup (alpha 0,70) demi
 > kontras. Tombol bundar klaster ikut diperjelas (skala 1,28x, cincin 4dp)
-> dan chip mode juga (skala 1,15x, cincin 4dp). Graf fokus v2.2.2 dan fitur
-> lain tidak berubah.
+> dan chip mode juga (skala 1,15x, cincin 4dp). Graf fokus v2.2.2 tidak
+> berubah. Masih di v2.2.3: glif tombol Input digambar ulang menjadi
+> simbol sumber klasik (layar persegi membulat + panah tebal masuk dari
+> kiri) karena glif lama terbaca sebagai "Pengaturan"; wordmark kiri atas
+> diperbesar 21sp → 26sp dan dibuat dua warna ("Orange" warna teks utama,
+> "TV" oranye aksen) agar terbaca tegas; dan tombol Input tidak lagi
+> diam-diam jatuh ke Pengaturan — bila intent VIEW_INPUT tidak ditangani
+> TV, tombol ini kini mencoba membuka aplikasi TV milik penyedia
+> TvInputService (vendor didahulukan), lalu aktivitas TV bawaan Android,
+> dan hanya menampilkan pesan "Pemilih input tidak tersedia di TV ini"
+> bila semuanya gagal.
 
 > **v2.2.2 (hotfix)** — navigasi remote kini memakai graf fokus 4 arah yang
 > eksplisit: Kiri/Kanan di strip dan di klaster kanan atas dirantai satu

@@ -3,8 +3,11 @@ package id.orangetv.launcher;
 import android.app.Activity;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -16,6 +19,9 @@ import android.os.Looper;
 import android.os.StatFs;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -353,9 +359,17 @@ public class MainActivity extends Activity {
         nameParams.leftMargin = TileFactory.dp(this, 11);
         nameColumn.setLayoutParams(nameParams);
         TextView wordmark = new TextView(this);
-        wordmark.setText("Orange TV");
+        // v2.2.3: lebih besar (26sp) + dua warna agar terbaca tegas
+        // "Orange TV" dari jarak sofa — "Orange " warna teks utama,
+        // "TV" oranye aksen.
+        SpannableString wordmarkText = new SpannableString("Orange TV");
+        wordmarkText.setSpan(new ForegroundColorSpan(theme.textPrimary),
+                0, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordmarkText.setSpan(new ForegroundColorSpan(UiTheme.ACCENT),
+                7, 9, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordmark.setText(wordmarkText);
         wordmark.setTextColor(theme.textPrimary);
-        wordmark.setTextSize(TypedValue.COMPLEX_UNIT_SP, 21);
+        wordmark.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26);
         wordmark.setTypeface(Typeface.DEFAULT_BOLD);
         nameColumn.addView(wordmark);
         View accentLine = new View(this);
@@ -1095,15 +1109,82 @@ public class MainActivity extends Activity {
         toast("Daftar aplikasi dimuat ulang");
     }
 
-    /** Buka pemilih input TV bila platform menyediakannya; jika tidak, Pengaturan. */
+    /**
+     * Buka pemilih input TV. Urutan usaha (v2.2.3): intent VIEW_INPUT resmi;
+     * lalu aplikasi TV milik penyedia TvInputService (vendor didahulukan);
+     * lalu aktivitas TV bawaan Android. SENGAJA tanpa jalan pintas ke
+     * Pengaturan — di versi sebelumnya jalan pintas itu selalu "berhasil"
+     * diam-diam di TV yang tidak menangani VIEW_INPUT, sehingga tombol
+     * Input terasa membuka Pengaturan, sama seperti tombol Pengaturan.
+     */
     private void openInputPicker() {
         if (tryStart(new Intent("com.android.tv.action.VIEW_INPUT"))) {
             return;
         }
-        if (tryStart(new Intent(Settings.ACTION_SETTINGS))) {
+        if (tryStartTvProviderApp()) {
+            return;
+        }
+        Intent tvActivity = new Intent(Intent.ACTION_MAIN);
+        tvActivity.setComponent(new ComponentName(
+                "com.android.tv", "com.android.tv.TvActivity"));
+        if (tryStart(tvActivity)) {
             return;
         }
         toast("Pemilih input tidak tersedia di TV ini");
+    }
+
+    /**
+     * Cari paket penyedia layanan TvInputService (aplikasi TV bawaan) dan
+     * buka aktivitas peluncurnya. Paket vendor (bukan "com.android.*")
+     * didahulukan; paket penyedia mana pun adalah cadangan. Paket Orange
+     * TV sendiri selalu dilewati.
+     */
+    private boolean tryStartTvProviderApp() {
+        try {
+            PackageManager pm = getPackageManager();
+            List<ResolveInfo> providers = pm.queryIntentServices(
+                    new Intent("android.media.tv.TvInputService"), 0);
+            String vendorPkg = null;
+            String anyPkg = null;
+            for (ResolveInfo ri : providers) {
+                if (ri.serviceInfo == null || ri.serviceInfo.packageName == null) {
+                    continue;
+                }
+                String pkg = ri.serviceInfo.packageName;
+                if (pkg.equals(getPackageName())) {
+                    continue;
+                }
+                if (anyPkg == null) {
+                    anyPkg = pkg;
+                }
+                if (!pkg.startsWith("com.android.")) {
+                    vendorPkg = pkg;
+                    break;
+                }
+            }
+            if (vendorPkg != null && tryLaunchPackage(pm, vendorPkg)) {
+                return true;
+            }
+            return anyPkg != null && !anyPkg.equals(vendorPkg)
+                    && tryLaunchPackage(pm, anyPkg);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /** Buka aktivitas peluncur sebuah paket; false bila tidak bisa dibuka. */
+    private boolean tryLaunchPackage(PackageManager pm, String pkg) {
+        try {
+            Intent launch = pm.getLaunchIntentForPackage(pkg);
+            if (launch == null) {
+                launch = new Intent(Intent.ACTION_MAIN);
+                launch.addCategory(Intent.CATEGORY_LAUNCHER);
+                launch.setPackage(pkg);
+            }
+            return tryStart(launch);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void openWifiSettings() {

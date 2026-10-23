@@ -44,17 +44,23 @@ public final class Glyphs {
 
         switch (kind) {
             case INPUT: {
-                // Persegi (layar) + segitiga putar di tengahnya.
-                RectF box = new RectF(18, 26, 78, 70);
+                // Simbol input/sumber klasik (v2.2.3): garis luar layar
+                // persegi membulat + panah TEBAL masuk dari sisi kiri —
+                // tangkai menembus tepi kiri layar, kepala panah di dalam.
+                // (Glif lama layar+segitiga-putar terbaca sebagai "putar/
+                // pengaturan" dari jarak sofa.)
                 p.setStyle(Paint.Style.STROKE);
-                cv.drawRoundRect(box, 8, 8, p);
-                Path tri = new Path();
-                tri.moveTo(42, 38);
-                tri.lineTo(42, 58);
-                tri.lineTo(60, 48);
-                tri.close();
+                p.setStrokeWidth(7f);
+                RectF box = new RectF(30, 24, 84, 72);
+                cv.drawRoundRect(box, 9, 9, p);
+                cv.drawLine(8, 48, 54, 48, p); // tangkai panah masuk
+                Path head = new Path();
+                head.moveTo(40, 35);
+                head.lineTo(60, 48);
+                head.lineTo(40, 61);
+                head.close();
                 p.setStyle(Paint.Style.FILL);
-                cv.drawPath(tri, p);
+                cv.drawPath(head, p);
                 break;
             }
             case WIFI: {
