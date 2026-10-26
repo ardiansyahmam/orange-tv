@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-10-25T23:11:06Z",
+  "diperbarui": "2026-10-26T23:11:08Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -63,14 +63,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Sevilla",
-      "lawan": "Osasuna",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-10-26T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +151,14 @@
       "kompetisi": "Bundesliga",
       "kandang": true,
       "kickoff_utc": "2026-10-30T19:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Villarreal",
+      "lawan": "Espanyol",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-30T20:00:00Z",
       "sumber": "thesportsdb"
     }
   ]
