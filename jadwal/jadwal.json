@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-10-26T23:11:08Z",
+  "diperbarui": "2026-10-27T23:11:24Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -63,30 +63,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Sassuolo",
-      "lawan": "Lazio",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-10-27T17:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Roma",
-      "lawan": "Cagliari",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-10-27T19:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Torino",
-      "lawan": "Como",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-10-27T19:45:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +135,30 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-10-30T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Levante",
+      "lawan": "Atlético Madrid",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T13:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Bologna",
+      "lawan": "Monza",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T14:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Werder Bremen",
+      "lawan": "Hoffenheim",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T14:30:00Z",
       "sumber": "thesportsdb"
     }
   ]
