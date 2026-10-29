@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-10-28T23:11:09Z",
+  "diperbarui": "2026-10-29T23:11:32Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -63,22 +63,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Frosinone",
-      "lawan": "Lecce",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-10-29T17:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Fiorentina",
-      "lawan": "Atalanta",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-10-29T19:45:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -156,6 +140,22 @@
     {
       "tim": "Bournemouth",
       "lawan": "Leeds United",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Manchester City",
+      "lawan": "Brighton and Hove Albion",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Brentford",
+      "lawan": "Nottingham Forest",
       "kompetisi": "Premier League",
       "kandang": true,
       "kickoff_utc": "2026-10-31T15:00:00Z",
