@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-10-29T23:11:32Z",
+  "diperbarui": "2026-10-30T23:11:32Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -63,22 +63,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Elversberg",
-      "lawan": "Mainz",
-      "kompetisi": "Bundesliga",
-      "kandang": true,
-      "kickoff_utc": "2026-10-30T19:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Villarreal",
-      "lawan": "Espanyol",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-10-30T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -156,6 +140,22 @@
     {
       "tim": "Brentford",
       "lawan": "Nottingham Forest",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Hull City",
+      "lawan": "Ipswich Town",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Coventry City",
+      "lawan": "Sunderland",
       "kompetisi": "Premier League",
       "kandang": true,
       "kickoff_utc": "2026-10-31T15:00:00Z",
