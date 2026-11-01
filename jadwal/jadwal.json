@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-10-31T23:11:23Z",
+  "diperbarui": "2026-11-01T23:11:31Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -7,22 +7,6 @@
       "kompetisi": "International Friendlies",
       "kandang": false,
       "kickoff_utc": "2026-11-13T18:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Liverpool",
-      "lawan": "Arsenal",
-      "kompetisi": "Premier League",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T16:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Juventus",
-      "lawan": "Napoli",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T19:45:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -39,86 +23,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Como",
-      "lawan": "Venezia",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T11:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Getafe",
-      "lawan": "Sevilla",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T13:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Lazio",
-      "lawan": "Cagliari",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T14:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Frosinone",
-      "lawan": "Torino",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T14:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Union Berlin",
-      "lawan": "Köln",
-      "kompetisi": "Bundesliga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T14:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Racing de Santander",
-      "lawan": "Real Madrid",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T15:15:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Eintracht Frankfurt",
-      "lawan": "Hamburg",
-      "kompetisi": "Bundesliga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T16:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Lecce",
-      "lawan": "Genoa",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T17:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Elche",
-      "lawan": "Valencia",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T17:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Athletic Bilbao",
-      "lawan": "Real Sociedad",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-01T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +63,102 @@
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-11-03T17:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Galatasaray",
+      "lawan": "Stuttgart",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T17:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Manchester United",
+      "lawan": "Roma",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Feyenoord",
+      "lawan": "Inter Milan",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Bodø/Glimt",
+      "lawan": "Lille",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Barcelona",
+      "lawan": "Aston Villa",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Villarreal",
+      "lawan": "Paris Saint-Germain",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "LASK",
+      "lawan": "Slovan Bratislava",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "AEK Athens",
+      "lawan": "Real Madrid",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T17:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Fenerbahçe",
+      "lawan": "Liverpool",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T17:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Lens",
+      "lawan": "Como",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Borussia Dortmund",
+      "lawan": "Real Betis",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "RB Leipzig",
+      "lawan": "Manchester City",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
       "sumber": "thesportsdb"
     }
   ]
