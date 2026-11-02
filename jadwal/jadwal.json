@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-01T23:11:31Z",
+  "diperbarui": "2026-11-02T23:11:35Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -23,38 +23,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Sassuolo",
-      "lawan": "Fiorentina",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-02T17:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Atalanta",
-      "lawan": "Parma",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-02T19:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Newcastle United",
-      "lawan": "Everton",
-      "kompetisi": "Premier League",
-      "kandang": true,
-      "kickoff_utc": "2026-11-02T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Deportivo de A Coruña",
-      "lawan": "Osasuna",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-02T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -156,6 +124,38 @@
     {
       "tim": "RB Leipzig",
       "lawan": "Manchester City",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "PSV Eindhoven",
+      "lawan": "Club Brugge",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Porto",
+      "lawan": "Napoli",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Slavia Prague",
+      "lawan": "Arsenal",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Viking",
+      "lawan": "Sabah Baku",
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-11-04T20:00:00Z",
