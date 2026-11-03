@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-02T23:11:35Z",
+  "diperbarui": "2026-11-03T23:11:04Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -11,82 +11,10 @@
     },
     {
       "tim": "Atlético Madrid",
-      "lawan": "Bayern Munich",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Atlético Madrid",
       "lawan": "Barcelona",
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Shakhtar Donetsk",
-      "lawan": "Sporting CP",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T17:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Galatasaray",
-      "lawan": "Stuttgart",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T17:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Manchester United",
-      "lawan": "Roma",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Feyenoord",
-      "lawan": "Inter Milan",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Bodø/Glimt",
-      "lawan": "Lille",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Barcelona",
-      "lawan": "Aston Villa",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Villarreal",
-      "lawan": "Paris Saint-Germain",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "LASK",
-      "lawan": "Slovan Bratislava",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-03T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +87,78 @@
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-11-04T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Hamburg",
+      "lawan": "Borussia Mönchengladbach",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-06T19:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Venezia",
+      "lawan": "Udinese",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-06T19:45:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Everton",
+      "lawan": "Coventry City",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-06T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Sevilla",
+      "lawan": "Deportivo Alavés",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-06T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Leeds United",
+      "lawan": "Tottenham Hotspur",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T12:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Málaga",
+      "lawan": "Racing de Santander",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T13:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Cagliari",
+      "lawan": "Frosinone",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Torino",
+      "lawan": "Lecce",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Mainz",
+      "lawan": "Bayern Munich",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:30:00Z",
       "sumber": "thesportsdb"
     }
   ]
