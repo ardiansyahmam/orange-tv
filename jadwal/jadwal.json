@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-03T23:11:04Z",
+  "diperbarui": "2026-11-04T23:11:15Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -15,78 +15,6 @@
       "kompetisi": "La Liga",
       "kandang": true,
       "kickoff_utc": "2026-11-08T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "AEK Athens",
-      "lawan": "Real Madrid",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T17:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Fenerbahçe",
-      "lawan": "Liverpool",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T17:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Lens",
-      "lawan": "Como",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Borussia Dortmund",
-      "lawan": "Real Betis",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "RB Leipzig",
-      "lawan": "Manchester City",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "PSV Eindhoven",
-      "lawan": "Club Brugge",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Porto",
-      "lawan": "Napoli",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Slavia Prague",
-      "lawan": "Arsenal",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Viking",
-      "lawan": "Sabah Baku",
-      "kompetisi": "Liga Champions",
-      "kandang": true,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +87,78 @@
       "kompetisi": "Bundesliga",
       "kandang": true,
       "kickoff_utc": "2026-11-07T14:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Borussia Dortmund",
+      "lawan": "Elversberg",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "RB Leipzig",
+      "lawan": "Augsburg",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Paderborn",
+      "lawan": "Eintracht Frankfurt",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T14:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Fulham",
+      "lawan": "Newcastle United",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Arsenal",
+      "lawan": "Hull City",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Espanyol",
+      "lawan": "Deportivo de A Coruña",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T15:15:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Parma",
+      "lawan": "Bologna",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T17:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Nottingham Forest",
+      "lawan": "Manchester City",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T17:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Osasuna",
+      "lawan": "Athletic Bilbao",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-07T17:30:00Z",
       "sumber": "thesportsdb"
     }
   ]
