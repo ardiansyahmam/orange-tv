@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-11T23:11:32Z",
+  "diperbarui": "2026-11-12T23:11:49Z",
   "jadwal": [
     {
       "tim": "Timnas Indonesia",
@@ -42,11 +42,27 @@
       "sumber": "thesportsdb"
     },
     {
+      "tim": "Athletic Bilbao",
+      "lawan": "Espanyol",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-20T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
       "tim": "Manchester City",
       "lawan": "Fulham",
       "kompetisi": "Premier League",
       "kandang": true,
       "kickoff_utc": "2026-11-21T12:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Deportivo Alavés",
+      "lawan": "Deportivo de A Coruña",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-21T13:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -143,22 +159,6 @@
       "kompetisi": "Premier League",
       "kandang": true,
       "kickoff_utc": "2026-11-21T15:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Parma",
-      "lawan": "Roma",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-21T17:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Newcastle United",
-      "lawan": "Arsenal",
-      "kompetisi": "Premier League",
-      "kandang": true,
-      "kickoff_utc": "2026-11-21T17:30:00Z",
       "sumber": "thesportsdb"
     }
   ]
