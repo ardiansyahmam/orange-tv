@@ -1,14 +1,6 @@
 {
-  "diperbarui": "2026-11-12T23:11:49Z",
+  "diperbarui": "2026-11-13T23:11:47Z",
   "jadwal": [
-    {
-      "tim": "Timnas Indonesia",
-      "lawan": "Jordan",
-      "kompetisi": "International Friendlies",
-      "kandang": false,
-      "kickoff_utc": "2026-11-13T18:00:00Z",
-      "sumber": "thesportsdb"
-    },
     {
       "tim": "Liverpool",
       "lawan": "Manchester United",
@@ -31,6 +23,14 @@
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-11-24T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Arsenal",
+      "lawan": "Manchester City",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-29T16:30:00Z",
       "sumber": "thesportsdb"
     },
     {
