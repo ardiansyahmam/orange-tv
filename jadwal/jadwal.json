@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-19T23:11:34Z",
+  "diperbarui": "2026-11-20T23:11:35Z",
   "jadwal": [
     {
       "tim": "Liverpool",
@@ -42,19 +42,11 @@
       "sumber": "thesportsdb"
     },
     {
-      "tim": "Bayern Munich",
-      "lawan": "Köln",
-      "kompetisi": "Bundesliga",
+      "tim": "Tottenham Hotspur",
+      "lawan": "Arsenal",
+      "kompetisi": "Premier League",
       "kandang": true,
-      "kickoff_utc": "2026-11-20T19:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Athletic Bilbao",
-      "lawan": "Espanyol",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-20T20:00:00Z",
+      "kickoff_utc": "2026-12-06T16:30:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -156,6 +148,14 @@
     {
       "tim": "Aston Villa",
       "lawan": "Sunderland",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Coventry City",
+      "lawan": "Crystal Palace",
       "kompetisi": "Premier League",
       "kandang": true,
       "kickoff_utc": "2026-11-21T15:00:00Z",
