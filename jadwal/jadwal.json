@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-22T23:11:33Z",
+  "diperbarui": "2026-11-23T23:11:34Z",
   "jadwal": [
     {
       "tim": "Arsenal",
@@ -50,27 +50,19 @@
       "sumber": "thesportsdb"
     },
     {
-      "tim": "Monza",
-      "lawan": "Fiorentina",
-      "kompetisi": "Serie A",
+      "tim": "Arsenal",
+      "lawan": "Real Madrid",
+      "kompetisi": "Liga Champions",
       "kandang": true,
-      "kickoff_utc": "2026-11-23T19:45:00Z",
+      "kickoff_utc": "2026-12-09T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
-      "tim": "Brentford",
-      "lawan": "Everton",
-      "kompetisi": "Premier League",
+      "tim": "Borussia Dortmund",
+      "lawan": "Inter Milan",
+      "kompetisi": "Liga Champions",
       "kandang": true,
-      "kickoff_utc": "2026-11-23T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Levante",
-      "lawan": "Elche",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-23T20:00:00Z",
+      "kickoff_utc": "2026-12-09T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -156,6 +148,14 @@
     {
       "tim": "Paris Saint-Germain",
       "lawan": "Roma",
+      "kompetisi": "Liga Champions",
+      "kandang": true,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Sporting CP",
+      "lawan": "Manchester United",
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-11-25T20:00:00Z",
