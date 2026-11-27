@@ -1,5 +1,5 @@
 {
-  "diperbarui": "2026-11-26T23:11:36Z",
+  "diperbarui": "2026-11-27T23:11:35Z",
   "jadwal": [
     {
       "tim": "Arsenal",
@@ -47,38 +47,6 @@
       "kompetisi": "Liga Champions",
       "kandang": true,
       "kickoff_utc": "2026-12-09T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Werder Bremen",
-      "lawan": "Borussia Mönchengladbach",
-      "kompetisi": "Bundesliga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-27T19:30:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Venezia",
-      "lawan": "Bologna",
-      "kompetisi": "Serie A",
-      "kandang": true,
-      "kickoff_utc": "2026-11-27T19:45:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Nottingham Forest",
-      "lawan": "Chelsea",
-      "kompetisi": "Premier League",
-      "kandang": true,
-      "kickoff_utc": "2026-11-27T20:00:00Z",
-      "sumber": "thesportsdb"
-    },
-    {
-      "tim": "Levante",
-      "lawan": "Racing de Santander",
-      "kompetisi": "La Liga",
-      "kandang": true,
-      "kickoff_utc": "2026-11-27T20:00:00Z",
       "sumber": "thesportsdb"
     },
     {
@@ -159,6 +127,38 @@
       "kompetisi": "Serie A",
       "kandang": true,
       "kickoff_utc": "2026-11-28T17:00:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Ipswich Town",
+      "lawan": "Aston Villa",
+      "kompetisi": "Premier League",
+      "kandang": true,
+      "kickoff_utc": "2026-11-28T17:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Elche",
+      "lawan": "Atlético Madrid",
+      "kompetisi": "La Liga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-28T17:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Stuttgart",
+      "lawan": "Eintracht Frankfurt",
+      "kompetisi": "Bundesliga",
+      "kandang": true,
+      "kickoff_utc": "2026-11-28T17:30:00Z",
+      "sumber": "thesportsdb"
+    },
+    {
+      "tim": "Inter Milan",
+      "lawan": "Genoa",
+      "kompetisi": "Serie A",
+      "kandang": true,
+      "kickoff_utc": "2026-11-28T19:45:00Z",
       "sumber": "thesportsdb"
     }
   ]
